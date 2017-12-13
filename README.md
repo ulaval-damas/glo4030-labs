@@ -48,3 +48,11 @@ des kernels dans *New*, il devrait y avoir *glo4030-7030*.
 
 
 ### Installation locale
+
+Il est possible d'installer en local les laboratoires. Il vous faudra idéalement
+une machine avec GPU. Les dépendances sont les suivantes:
+
+- cuda
+- cudnn
+- pytorch http://pytorch.org/
+- les dépendances du fichier `requirements.txt`
