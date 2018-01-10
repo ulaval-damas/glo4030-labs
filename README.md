@@ -19,9 +19,9 @@ minute la plupart du temps. Voici les étapes à suivre:
    cocher *Require a GPU* et *Enable Compte Canada software stack*
 
 
-Une fois connecté, vous devriez avoir accès au système de fichier. Dans votre
-*home* se trouve le répertoire du cours. Il contient les jeux de données, les
-laboratoires et l'environnement virtuel python. 
+Une fois connecté, vous devriez avoir accès au système de fichier. Le répertoire
+du cours se situe au `/rap/colosse-users/GLO-4030`. Il contient les jeux de
+données, les laboratoires et l'environnement virtuel python.
 
 
 > **IMPORTANT**
@@ -33,14 +33,18 @@ laboratoires et l'environnement virtuel python.
 Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 
 1. Ouvrir un terminal en cliquant sur New > Terminal
-2. Copier l'environnement virtuel avec `cp -r glo4030-7030/venv ~/venv`
-3. `module load apps/python/3.5.0`
-4. `source ~/venv/bin/activate`
-5. Création d'un kernel Jupyer de votre environnement (cela permet de lancer des
+2. `module load apps/python/3.5.0`
+3. `source /rap/colosse-users/GLO-4030/venv/bin/activate`
+4. Créer un kernel Jupyer de votre environnement (cela permet de lancer des
    notebooks dans votre environnement virtuel): `python -m ipykernel install
    --user --name glo4030-7030`
-6. Copie du labo 1 en local `cp glo4030-7030/labs/Laboratoire1.ipynb ~/`
-7. Quitter la console avec CTRL-D puis fermez la fenêtre.
+5. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours avec `ln -s /rap/colosse-users/GLO-4030 ~`.
+6. Allez dans l'onglet Softwares de JupyterHub et ajoutez `cuda 8` et `cudnn 6`.
+   **Cette étape doit être faite avant chaque laboratoire**
+7. Copie du labo 1 en local `cp ~/glo4030-7030/labs/Laboratoire1.ipynb ~/`. Cela
+   vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
+   qu'en lecture seule aux fichers du répertoire du cours.
+8. Quitter la console avec CTRL-D puis fermez la fenêtre.
 
 
 À cette étape, vous devriez avoir un kernel Jupyter fonctionnel. Dans la liste
