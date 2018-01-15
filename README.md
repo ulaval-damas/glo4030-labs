@@ -40,7 +40,7 @@ Les prochaines étapes se font en ligne de commande directement dans Jupyter:
    --user --name glo4030-7030`
 5. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours avec `ln -s /rap/colosse-users/GLO-4030 ~`.
 6. Allez dans l'onglet Softwares de JupyterHub et ajoutez `cuda 8` et `cudnn 6`.
-   **Cette étape doit être faite avant chaque laboratoire**
+   **Cette étape doit être faite avant chaque laboratoire**.
 7. Copie du labo 1 en local `cp ~/glo4030-7030/labs/Laboratoire1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
    qu'en lecture seule aux fichers du répertoire du cours.
