@@ -1,9 +1,11 @@
 import math
 import random
+import numpy as np
 import torch
-from torch.utils import data
+import torch.utils.data
+from torch.utils.data.sampler import SubsetRandomSampler
 
-class SpiralDataset(data.Dataset):
+class SpiralDataset(torch.utils.data.Dataset):
 
     def __init__(self, n_points=500, noise=0.2):
         self.points = torch.Tensor(n_points, 7)
@@ -33,9 +35,30 @@ class SpiralDataset(data.Dataset):
         return len(self.labels)
 
 
-    def __getitem__(self):
-        pass
+    def __getitem__(self, i):
+        return self.points[i], self.labels[i]
 
 
     def to_numpy(self):
         return self.points.numpy(), self.labels.numpy()
+
+
+def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True):
+    num_data = len(dataset)
+    indices = np.arange(num_data)
+    split = math.floor(train_split * num_data)
+
+    if shuffle == True:
+        np.random.shuffle(indices)
+
+    train_idx, valid_idx = indices[split:], indices[:split]
+
+    train_sampler = SubsetRandomSampler(train_idx)
+    valid_sampler = SubsetRandomSampler(valid_idx)
+
+    train_loader = torch.utils.data.DataLoader(dataset,
+                    batch_size=batch_size, sampler=train_sampler)
+    valid_loader = torch.utils.data.DataLoader(dataset,
+                    batch_size=batch_size, sampler=valid_sampler)
+
+    return train_loader, valid_loader
