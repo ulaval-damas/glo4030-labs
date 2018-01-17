@@ -4,6 +4,37 @@ From https://discuss.pytorch.org/t/print-autograd-graph/692/16
 from graphviz import Digraph
 import torch
 from torch.autograd import Variable
+import matplotlib.pyplot as plt
+
+
+def plot_images(images, cls_true, label_names=None, cls_pred=None, gray=False):
+    assert len(images) == len(cls_true) == 9
+
+    # Create figure with sub-plots.
+    fig, axes = plt.subplots(3, 3)
+
+    for i, ax in enumerate(axes.flat):
+        if gray:
+            ax.imshow(images[i], cmap='gray', interpolation='spline16')
+        else:
+            ax.imshow(images[i, :, :, :], interpolation='spline16')
+        # get its equivalent class name
+
+        if label_names:
+            cls_true_name = label_names[cls_true[i]]
+
+            if cls_pred is None:
+                xlabel = "{0} ({1})".format(cls_true_name, cls_true[i])
+            else:
+                cls_pred_name = label_names[cls_pred[i]]
+                xlabel = "True: {0}\nPred: {1}".format(cls_true_name, cls_pred_name)
+
+            ax.set_xlabel(xlabel)
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+    plt.tight_layout()
+    plt.show()
 
 
 def make_vizualization_autograd(var, params=None):
