@@ -4,6 +4,8 @@ import numpy as np
 import torch
 import torch.utils.data
 from torch.utils.data.sampler import SubsetRandomSampler
+from deeplib.datasets import load_mnist
+from torchvision.transforms import ToTensor, Compose
 
 class SpiralDataset(torch.utils.data.Dataset):
 
@@ -62,3 +64,4 @@ def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True):
                     batch_size=batch_size, sampler=valid_sampler)
 
     return train_loader, valid_loader
+
