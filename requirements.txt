@@ -1,3 +1,4 @@
+torchvision
 ipykernel==4.7.0
 ipython==6.2.1
 jupyter-client==5.1.0
@@ -6,3 +7,5 @@ matplotlib==2.1.0
 numpy==1.13.3
 Pillow==4.3.0
 graphviz==0.8.2
+scikit-learn==0.19.1
+scipy==0.19.1
