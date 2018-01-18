@@ -60,4 +60,4 @@ une machine avec GPU. Les dépendances sont les suivantes:
 - cuda
 - cudnn
 - pytorch http://pytorch.org/
-- les dépendances du fichier `requirements.txt`
+- les dépendances du fichier `requirements.txt` (avec `pip install -r requirements.txt`)
