@@ -33,18 +33,19 @@ données, les laboratoires et l'environnement virtuel python.
 Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 
 1. Ouvrir un terminal en cliquant sur New > Terminal
-2. `module load apps/python/3.5.0`
-3. `source /rap/colosse-users/GLO-4030/venv/bin/activate`
-4. Créer un kernel Jupyer de votre environnement (cela permet de lancer des
-   notebooks dans votre environnement virtuel): `python -m ipykernel install
+2. `source /rap/colosse-users/GLO-4030/venv/bin/activate`
+3. Créer un kernel Jupyer de l'environnement (cela permet de lancer des
+   notebooks dans l'environnement virtuel): `python -m ipykernel install
    --user --name glo4030-7030`
-5. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours avec `ln -s /rap/colosse-users/GLO-4030 ~`.
-6. Allez dans l'onglet Softwares de JupyterHub et ajoutez `cuda 8` et `cudnn 6`.
-   **Cette étape doit être faite avant chaque laboratoire**.
-7. Copie du labo 1 en local `cp ~/glo4030-7030/labs/Laboratoire1.ipynb ~/`. Cela
+4. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
+   avec `ln -s /rap/colosse-users/GLO-4030 ~`. Le répertoire du cours est
+   maintenant en raccourci dans votre $HOME.
+5. Aller dans l'onglet Softwares de JupyterHub et ajoutez `cuda 8` et `cudnn 7`.
+   Appuyer sur `Save` sans préciser de nom de collection; cela modifie les modules par défaut.
+6. Copier le labo 1 dans votre $HOME `cp ~/glo4030-7030/labs/Laboratoire1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
-   qu'en lecture seule aux fichers du répertoire du cours.
-8. Quitter la console avec CTRL-D puis fermez la fenêtre.
+   qu'en lecture seule aux fichiers du répertoire du cours.
+7. Quitter la console avec CTRL-D puis fermez la fenêtre.
 
 
 À cette étape, vous devriez avoir un kernel Jupyter fonctionnel. Dans la liste
