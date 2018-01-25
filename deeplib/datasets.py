@@ -30,7 +30,7 @@ def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True):
         np.random.shuffle(indices)
 
     split = math.floor(train_split * num_data)
-    train_idx, valid_idx = indices[split:], indices[:split]
+    train_idx, valid_idx = indices[:split:], indices[split:]
 
     train_sampler = SubsetRandomSampler(train_idx)
     valid_sampler = SubsetRandomSampler(valid_idx)
