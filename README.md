@@ -42,7 +42,7 @@ Les prochaines étapes se font en ligne de commande directement dans Jupyter:
    maintenant en raccourci dans votre $HOME.
 5. Aller dans l'onglet Softwares de JupyterHub et ajoutez `cuda 8` et `cudnn 7`.
    Appuyer sur `Save` sans préciser de nom de collection; cela modifie les modules par défaut.
-6. Copier le labo 1 dans votre $HOME `cp ~/glo4030-7030/labs/Laboratoire\ 1.ipynb ~/`. Cela
+6. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/labs/Laboratoire\ 1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
    qu'en lecture seule aux fichiers du répertoire du cours.
 7. Quitter la console avec CTRL-D puis fermez la fenêtre.
