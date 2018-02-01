@@ -107,7 +107,7 @@ def plot_images(images, cls_true, label_names=None, cls_pred=None, score=None, g
                 xlabel = "True: {0}\nPred: {1}".format(cls_true_name, cls_pred_name)
             else:
                 cls_pred_name = label_names[cls_pred[i]]
-                xlabel = "True: {0}\nPred: {1}\nScore: {2:.2f}".format(cls_true_name, cls_pred_name, score[i] * 100)
+                xlabel = "True: {0}\nPred: {1}\nScore: {2:.2f}%".format(cls_true_name, cls_pred_name, score[i] * 100)
 
             ax.set_xlabel(xlabel)
         ax.set_xticks([])
