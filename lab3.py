@@ -85,9 +85,9 @@ def train(model, optimizer, dataset, n_epoch, batch_size, use_gpu=True, schedule
     train_loader, val_loader = train_valid_loaders(dataset, batch_size=batch_size)
 
     for i in range(n_epoch):
-        start = time()
+        start = time.time()
         do_epoch(criterion, model, optimizer, scheduler, train_loader, use_gpu)
-        end = time()
+        end = time.time()
 
         train_acc, train_loss = validate(model, train_loader, use_gpu)
         val_acc, val_loss = validate(model, val_loader, use_gpu)
