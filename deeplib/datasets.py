@@ -21,12 +21,11 @@ def load_cifar10(download=False, path='/rap/colosse-users/GLO-4030/datasets/cifa
     return train_dataset, test_dataset
 
 
-
 def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True):
     num_data = len(dataset)
     indices = np.arange(num_data)
 
-    if shuffle == True:
+    if shuffle:
         np.random.shuffle(indices)
 
     split = math.floor(train_split * num_data)

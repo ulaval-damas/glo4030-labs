@@ -3,11 +3,88 @@ From https://discuss.pytorch.org/t/print-autograd-graph/692/16
 '''
 from graphviz import Digraph
 import torch
-from torch.autograd import Variable
 import matplotlib.pyplot as plt
+import random
+import numpy as np
 
 
-def plot_images(images, cls_true, label_names=None, cls_pred=None, gray=False):
+def show_worst(results):
+    worst_results = []
+    for i, result in enumerate(results):
+        if len(worst_results) < 9:
+            worst_results.append((result[1], i))
+
+        else:
+            if result[1] < worst_results[0][0]:
+                worst_results[8] = (result[1], i)
+
+        worst_results.sort()
+
+    imgs, true, pred, score = [], [], [], []
+    for i in range(9):
+        worst = results[worst_results[i][1]]
+        imgs.append(np.transpose(worst[0], (1, 2, 0)))
+        score.append(worst[1])
+        true.append(worst[2])
+        pred.append(worst[3])
+
+    imgs = np.asarray(imgs)
+    plot_cifar_images(imgs, true, pred, score=score)
+
+
+def show_best(results):
+    best_results = []
+    for i, result in enumerate(results):
+        if len(best_results) < 9:
+            best_results.append((result[1], i))
+
+        else:
+            if result[1] > best_results[0][0]:
+                best_results[0] = (result[1], i)
+
+        best_results.sort()
+
+    imgs, true, pred, score = [], [], [], []
+    for i in range(8, -1, -1):
+        best = results[best_results[i][1]]
+        imgs.append(np.transpose(best[0], (1, 2, 0)))
+        score.append(best[1])
+        true.append(best[2])
+        pred.append(best[3])
+
+    imgs = np.asarray(imgs)
+    plot_cifar_images(imgs, true, pred, score=score)
+
+
+def show_random(results):
+    test = random.sample(results, 9)
+    imgs, true, pred = [], [], []
+    for i in range(9):
+        imgs.append(np.transpose(test[i][0], (1, 2, 0)))
+        true.append(test[i][2])
+        pred.append(test[i][3])
+
+    imgs = np.asarray(imgs)
+    plot_cifar_images(imgs, true, pred)
+
+
+def plot_cifar_images(images, cls_true, cls_pred=None, score=None):
+    label_names = [
+        'airplane',
+        'automobile',
+        'bird',
+        'cat',
+        'deer',
+        'dog',
+        'frog',
+        'horse',
+        'ship',
+        'truck'
+    ]
+    plot_images(images, cls_true, label_names, cls_pred, score)
+
+
+def plot_images(images, cls_true, label_names=None, cls_pred=None, score=None, gray=False):
     assert len(images) == len(cls_true) == 9
 
     # Create figure with sub-plots.
@@ -25,9 +102,12 @@ def plot_images(images, cls_true, label_names=None, cls_pred=None, gray=False):
 
             if cls_pred is None:
                 xlabel = "{0} ({1})".format(cls_true_name, cls_true[i])
-            else:
+            elif score is None:
                 cls_pred_name = label_names[cls_pred[i]]
                 xlabel = "True: {0}\nPred: {1}".format(cls_true_name, cls_pred_name)
+            else:
+                cls_pred_name = label_names[cls_pred[i]]
+                xlabel = "True: {0}\nPred: {1}\nScore: {2:.2f}".format(cls_true_name, cls_pred_name, score[i] * 100)
 
             ax.set_xlabel(xlabel)
         ax.set_xticks([])
