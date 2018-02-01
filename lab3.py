@@ -89,7 +89,6 @@ def train(model, optimizer, dataset, n_epoch, batch_size, use_gpu=True, schedule
         train_acc, train_loss = validate(model, train_loader, use_gpu)
         val_acc, val_loss = validate(model, val_loader, use_gpu)
         history.save(train_acc, val_acc, train_loss, val_loss, optimizer.param_groups[0]['lr'])
-        history.display_loss()
         print('Epoch {} - Train acc: {:.2f} - Val acc: {:.2f} - Train loss: {:.4f} - Val loss: {:.4f}'.format(i,
                                                                                                               train_acc,
                                                                                                               val_acc,
