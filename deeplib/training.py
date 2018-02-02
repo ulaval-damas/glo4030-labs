@@ -6,12 +6,10 @@ from sklearn.metrics import accuracy_score
 from torch.utils.data.sampler import SequentialSampler
 
 from deeplib.history import History
-from deeplib.datasets import train_valid_loaders, load_cifar10
+from deeplib.datasets import train_valid_loaders
 
 from torch.autograd import Variable
 from torchvision.transforms import ToTensor
-
-from deeplib.net import CifarNet
 
 
 def validate(model, val_loader, use_gpu=True):
@@ -129,19 +127,3 @@ def test(model, test_dataset, batch_size, use_gpu=True):
 
     score, loss = validate(model, test_loader, use_gpu=use_gpu)
     return score
-
-if __name__ == '__main__':
-    cifar_train, cifar_test = load_cifar10(path='./dataset/')
-    model = CifarNet()
-    model.cuda()
-
-    batch_size = 32
-    lr = 0.01
-    n_epoch = 10
-
-    model.load_state_dict(torch.load('./model/q1.pyt'))
-
-    cifar_test.transform = ToTensor()
-    loader, _ = train_valid_loaders(cifar_test, batch_size, train_split=1)
-    good, bad = validate_ranking(model, loader, use_gpu=True)
-
