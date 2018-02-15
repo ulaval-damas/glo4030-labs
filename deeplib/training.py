@@ -13,6 +13,7 @@ from torchvision.transforms import ToTensor
 
 
 def validate(model, val_loader, use_gpu=True):
+    model.train(False)
     true = []
     pred = []
     val_loss = []
@@ -37,6 +38,7 @@ def validate(model, val_loader, use_gpu=True):
         true.extend(targets.data.cpu().numpy().tolist())
         pred.extend(predictions.data.cpu().numpy().tolist())
 
+    model.train(True)
     return accuracy_score(true, pred) * 100, sum(val_loss) / len(val_loss)
 
 
@@ -74,10 +76,11 @@ def validate_ranking(model, val_loader, use_gpu=True):
     return good, errors
 
 
-def train(model, optimizer, dataset, n_epoch, batch_size, use_gpu=True, scheduler=None):
+def train(model, optimizer, dataset, n_epoch, batch_size, use_gpu=True, scheduler=None, criterion=None):
     history = History()
 
-    criterion = nn.CrossEntropyLoss()
+    if criterion is None:
+        criterion = nn.CrossEntropyLoss()
 
     dataset.transform = ToTensor()
     train_loader, val_loader = train_valid_loaders(dataset, batch_size=batch_size)

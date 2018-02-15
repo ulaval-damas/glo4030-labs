@@ -96,3 +96,32 @@ class CifarNet(nn.Module):
         for s in size:
             num_features *= s
         return num_features
+
+
+
+class CifarNetBatchNorm(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 10, 5, padding=1)
+        self.bn1 = nn.BatchNorm2d(10)
+        self.conv2 = nn.Conv2d(10, 50, 3, padding=1, stride=2)
+        self.bn2 = nn.BatchNorm2d(50)
+        self.conv3 = nn.Conv2d(50, 150, 3, padding=1, stride=2)
+        self.bn3 = nn.BatchNorm2d(150)
+        self.fc1 = nn.Linear(2400 , 10)
+
+    def forward(self, x):
+        x = F.relu(self.bn1(self.conv1(x)))
+        x = F.relu(self.bn2(self.conv2(x)))
+        x = F.max_pool2d(F.relu(self.bn3(self.conv3(x))), (2,2))
+        x = x.view(-1, self.num_flat_features(x))
+        x = self.fc1(x)
+        return x
+
+    @staticmethod
+    def num_flat_features(x):
+        size = x.size()[1:]
+        num_features = 1
+        for s in size:
+            num_features *= s
+        return num_features
