@@ -6,6 +6,8 @@ import torch
 import matplotlib.pyplot as plt
 import random
 import numpy as np
+from torch.autograd import Variable
+from torchvision.transforms import ToTensor
 
 
 def show_worst(results):
@@ -165,3 +167,18 @@ def make_vizualization_autograd(var, params=None):
     add_nodes(var.grad_fn)
 
     return dot
+
+
+def view_filters(net, img):
+    img = ToTensor()(img)
+    img = Variable(img.unsqueeze(0), volatile=True)
+    img = img.cuda()
+    output = net.conv1(img)
+    output = output.cpu().data.numpy()[0]
+
+    fig, axes = plt.subplots(1, len(output))
+    for i in range(len(output)):
+        axes[i].imshow(output[i])
+        axes[i].set_xticks([])
+        axes[i].set_yticks([])
+    plt.show()
