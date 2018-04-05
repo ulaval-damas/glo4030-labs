@@ -3,8 +3,9 @@ import random
 import numpy as np
 import torch
 import torch.utils.data
+import os
+import csv
 from torch.utils.data.sampler import SubsetRandomSampler
-from torchvision.transforms import ToTensor, Compose
 from torchvision.datasets.mnist import MNIST
 from torchvision.datasets.cifar import CIFAR10
 
@@ -19,6 +20,29 @@ def load_cifar10(download=False, path='/rap/colosse-users/GLO-4030/datasets/cifa
     train_dataset = CIFAR10(path, train=True, download=download)
     test_dataset = CIFAR10(path, train=False, download=download)
     return train_dataset, test_dataset
+
+
+def load_shakespear(path="/rap/colosse-users/GLO-4030/datasets/", file_name='Shakespeare_data.csv'):
+    full_path = os.path.join(path, file_name)
+    data = []
+    with open(full_path, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            data.append(row)
+
+    only_lines = []
+    for x in data:
+        only_lines.append(x[5])
+    return only_lines
+
+def load_quotes(path="/rap/colosse-users/GLO-4030/datasets", file_name='author-quote.txt'):
+    full_path = os.path.join(path, file_name)
+    data = []
+    file = open(full_path, 'r')
+    for line in file:
+        author, quote = line.split('\t')
+        data.append(quote)
+    return data
 
 
 def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True):
