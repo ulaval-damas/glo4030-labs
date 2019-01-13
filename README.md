@@ -45,7 +45,8 @@ Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 6. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/labs/Laboratoire\ 1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
    qu'en lecture seule aux fichiers du répertoire du cours.
-7. Quitter la console avec CTRL-D puis fermez la fenêtre.
+7. Copier la librairie `deeplib` dans votre $HOME `cp -r GLO-4030/glo4030-labs/deeplib/ ./`
+8. Quitter la console avec CTRL-D puis fermez la fenêtre.
 
 
 À cette étape, vous devriez avoir un kernel Jupyter fonctionnel. Dans la liste
