@@ -34,7 +34,7 @@ def validate(model, val_loader, use_gpu=True):
 
         predictions = output.max(dim=1)[1]
 
-        val_loss.append(criterion(output, targets).data[0])
+        val_loss.append(criterion(output, targets).item())
         true.extend(targets.data.cpu().numpy().tolist())
         pred.extend(predictions.data.cpu().numpy().tolist())
 
@@ -66,12 +66,12 @@ def validate_ranking(model, val_loader, use_gpu=True):
 
         for i in range(len(inputs)):
             score = output[i][targets[i]].data
-            target = targets[i].data[0]
-            pred = predictions[i].data[0]
+            target = targets[i].item()
+            pred = predictions[i].item()
             if target == pred:
-                good.append((inputs[i].data.cpu().numpy(), score[0], target, pred))
+                good.append((inputs[i].data.cpu().numpy(), score.item(), target, pred))
             else:
-                errors.append((inputs[i].data.cpu().numpy(), score[0], target, pred))
+                errors.append((inputs[i].data.cpu().numpy(), score.item(), target, pred))
 
     return good, errors
 
