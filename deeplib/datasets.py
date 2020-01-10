@@ -10,19 +10,22 @@ from torchvision.datasets.mnist import MNIST
 from torchvision.datasets.cifar import CIFAR10
 
 
-def load_mnist(download=False, path='/rap/colosse-users/GLO-4030/datasets/mnist'):
+BASE_PATH = '~/GLO-4030/datasets/'
+
+
+def load_mnist(download=False, path=os.path.join(BASE_PATH, 'mnist')):
     train_dataset = MNIST(path, train=True, download=download)
     test_dataset = MNIST(path, train=False, download=download)
     return train_dataset, test_dataset
 
 
-def load_cifar10(download=False, path='/rap/colosse-users/GLO-4030/datasets/cifar10'):
+def load_cifar10(download=False, path=os.path.join(BASE_PATH, 'cifar10')):
     train_dataset = CIFAR10(path, train=True, download=download)
     test_dataset = CIFAR10(path, train=False, download=download)
     return train_dataset, test_dataset
 
 
-def load_shakespear(path="/rap/colosse-users/GLO-4030/datasets/", file_name='Shakespeare_data.csv'):
+def load_shakespear(path=BASE_PATH, file_name='Shakespeare_data.csv'):
     full_path = os.path.join(path, file_name)
     data = []
     with open(full_path, 'r') as csvfile:
@@ -35,7 +38,7 @@ def load_shakespear(path="/rap/colosse-users/GLO-4030/datasets/", file_name='Sha
         only_lines.append(x[5])
     return only_lines
 
-def load_quotes(path="/rap/colosse-users/GLO-4030/datasets", file_name='author-quote.txt'):
+def load_quotes(path=BASE_PATH, file_name='author-quote.txt'):
     full_path = os.path.join(path, file_name)
     data = []
     file = open(full_path, 'r')
