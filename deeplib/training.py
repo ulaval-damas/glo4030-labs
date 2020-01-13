@@ -21,15 +21,11 @@ def validate(model, val_loader, use_gpu=True):
     criterion = nn.CrossEntropyLoss()
     model.eval()
 
-    for j, batch in enumerate(val_loader):
-
-        inputs, targets = batch
+    for j, (inputs, targets) in enumerate(val_loader):
         if use_gpu:
             inputs = inputs.cuda()
             targets = targets.cuda()
 
-        inputs = Variable(inputs, volatile=True)
-        targets = Variable(targets, volatile=True)
         output = model(inputs)
 
         predictions = output.max(dim=1)[1]
@@ -50,15 +46,11 @@ def validate_ranking(model, val_loader, use_gpu=True):
     criterion = torch.nn.Softmax(dim=1)
     model.eval()
 
-    for batch in val_loader:
-
-        inputs, targets = batch
+    for inputs, targets in val_loader:
         if use_gpu:
             inputs = inputs.cuda()
             targets = targets.cuda()
 
-        inputs = Variable(inputs, volatile=True)
-        targets = Variable(targets, volatile=True)
         output = model(inputs)
         output = criterion(output)
 
@@ -106,9 +98,7 @@ def do_epoch(criterion, model, optimizer, scheduler, train_loader, use_gpu):
     model.train()
     if scheduler:
         scheduler.step()
-    for batch in train_loader:
-
-        inputs, targets = batch
+    for inputs, targets in train_loader:
         if use_gpu:
             inputs = inputs.cuda()
             targets = targets.cuda()

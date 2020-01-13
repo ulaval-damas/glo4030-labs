@@ -48,7 +48,11 @@ Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 
 
 À cette étape, vous devriez avoir un kernel Jupyter fonctionnel. Dans la liste
-des kernels dans *New*, il devrait y avoir *glo4030-7030*.
+des kernels dans *New*, il devrait y avoir *glo4030-7030*. S'il n'apparaît pas,
+rafraîchir la page.
+
+Pour démarrer un laboratoire, double-cliquer sur le laboratoire. Une fois ouvert, faire
+Kernel > Change Kernel > glo4030-7030. Vous êtes maintenant prêt à commencer le laboratoire.
 
 
 ### Installation locale
