@@ -55,6 +55,15 @@ Pour démarrer un laboratoire, double-cliquer sur le laboratoire. Une fois ouver
 Kernel > Change Kernel > glo4030-7030. Vous êtes maintenant prêt à commencer le laboratoire.
 
 
+### Exécution sur Google Colab
+
+Il est possible d'utiliser Google Colab pour les laboratoires suivants:
+
+- [Laboratoire 1](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Colab/Laboratoire%201.ipynb)
+
+Le seul prérequis est d'avoir un compte Google.
+
+
 ### Installation locale
 
 Il est possible d'installer en local les laboratoires. Il vous faudra idéalement
