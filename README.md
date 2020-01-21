@@ -13,10 +13,14 @@ system* pour se faire allouer des ressources. Cela devrait prendre moins d'une
 minute la plupart du temps. Voici les étapes à suivre:
 
 1. Vous rendre au https://jupyter.calculquebec.ca/hub/login
-2. Vous connecter avec votre compte Calcul Québec
-3. Appuyer sur le bouton *Start my server*
-4. Indiquer la durée de votre réservation de machine avec GPU dans *Runtime* et
-   cocher *Require a GPU* et *Enable Compte Canada software stack*
+2. Vous connecter avec votre compte Calcul Canada
+3. Remplir le formulaire avec les informations suivantes:
+    - Number of cores: entre 1 et 4
+    - Memory: 2048
+    - GPU configuration: 1 x K20
+    - Reservation: GLO7030 sur les heures de laboratoire, sinon None
+    - Garder les choix par défaut pour le reste des options
+4. Appuyer sur le bouton *Spawn*
 
 
 Une fois connecté, vous devriez avoir accès au système de fichier. Le répertoire
@@ -53,6 +57,15 @@ rafraîchir la page.
 
 Pour démarrer un laboratoire, double-cliquer sur le laboratoire. Une fois ouvert, faire
 Kernel > Change Kernel > glo4030-7030. Vous êtes maintenant prêt à commencer le laboratoire.
+
+
+### Exécution sur Google Colab
+
+Il est possible d'utiliser Google Colab pour les laboratoires suivants:
+
+- [Laboratoire 1](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Colab/Laboratoire%201.ipynb)
+
+Le seul prérequis est d'avoir un compte Google.
 
 
 ### Installation locale
