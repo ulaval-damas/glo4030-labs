@@ -98,8 +98,6 @@ def train(model, optimizer, dataset, n_epoch, batch_size, use_gpu=True, schedule
 
 def do_epoch(criterion, model, optimizer, scheduler, train_loader, use_gpu):
     model.train()
-    if scheduler:
-        scheduler.step()
     for inputs, targets in train_loader:
         if use_gpu:
             inputs = inputs.cuda()
@@ -112,6 +110,8 @@ def do_epoch(criterion, model, optimizer, scheduler, train_loader, use_gpu):
         loss.backward()
         optimizer.step()
 
+    if scheduler:
+        scheduler.step()
 
 def test(model, test_dataset, batch_size, use_gpu=True):
     test_dataset.transform = ToTensor()
