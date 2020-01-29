@@ -103,8 +103,6 @@ def do_epoch(criterion, model, optimizer, scheduler, train_loader, use_gpu):
             inputs = inputs.cuda()
             targets = targets.cuda()
 
-        inputs = Variable(inputs)
-        targets = Variable(targets)
         optimizer.zero_grad()
         output = model(inputs)
 
