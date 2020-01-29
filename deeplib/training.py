@@ -47,24 +47,25 @@ def validate_ranking(model, val_loader, use_gpu=True):
     criterion = torch.nn.Softmax(dim=1)
     model.eval()
 
-    for inputs, targets in val_loader:
-        if use_gpu:
-            inputs = inputs.cuda()
-            targets = targets.cuda()
+    with torch.no_grad():
+        for inputs, targets in val_loader:
+            if use_gpu:
+                inputs = inputs.cuda()
+                targets = targets.cuda()
 
-        output = model(inputs)
-        output = criterion(output)
+            output = model(inputs)
+            output = criterion(output)
 
-        predictions = output.max(dim=1)[1]
+            predictions = output.max(dim=1)[1]
 
-        for i in range(len(inputs)):
-            score = output[i][targets[i]].data
-            target = targets[i].item()
-            pred = predictions[i].item()
-            if target == pred:
-                good.append((inputs[i].data.cpu().numpy(), score.item(), target, pred))
-            else:
-                errors.append((inputs[i].data.cpu().numpy(), score.item(), target, pred))
+            for i in range(len(inputs)):
+                score = output[i][targets[i]].data
+                target = targets[i].item()
+                pred = predictions[i].item()
+                if target == pred:
+                    good.append((inputs[i].data.cpu().numpy(), score.item(), target, pred))
+                else:
+                    errors.append((inputs[i].data.cpu().numpy(), score.item(), target, pred))
 
     return good, errors
 
