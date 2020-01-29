@@ -21,18 +21,19 @@ def validate(model, val_loader, use_gpu=True):
     criterion = nn.CrossEntropyLoss()
     model.eval()
 
-    for j, (inputs, targets) in enumerate(val_loader):
-        if use_gpu:
-            inputs = inputs.cuda()
-            targets = targets.cuda()
+    with torch.no_grad():
+        for j, (inputs, targets) in enumerate(val_loader):
+            if use_gpu:
+                inputs = inputs.cuda()
+                targets = targets.cuda()
 
-        output = model(inputs)
+            output = model(inputs)
 
-        predictions = output.max(dim=1)[1]
+            predictions = output.max(dim=1)[1]
 
-        val_loss.append(criterion(output, targets).item())
-        true.extend(targets.data.cpu().numpy().tolist())
-        pred.extend(predictions.data.cpu().numpy().tolist())
+            val_loss.append(criterion(output, targets).item())
+            true.extend(targets.data.cpu().numpy().tolist())
+            pred.extend(predictions.data.cpu().numpy().tolist())
 
     model.train(True)
     return accuracy_score(true, pred) * 100, sum(val_loss) / len(val_loss)
