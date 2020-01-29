@@ -65,6 +65,7 @@ Il est possible d'utiliser Google Colab pour les laboratoires suivants:
 
 - [Laboratoire 1](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Colab/Laboratoire%201.ipynb)
 - [Laboratoire 2](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Colab/Laboratoire%202.ipynb)
+- [Laboratoire 3](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Colab/Laboratoire%203.ipynb)
 
 Le seul prérequis est d'avoir un compte Google.
 
