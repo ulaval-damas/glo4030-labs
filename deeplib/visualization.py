@@ -170,11 +170,11 @@ def make_vizualization_autograd(var, params=None):
 
 
 def view_filters(net, img):
-    img = ToTensor()(img)
-    img = Variable(img.unsqueeze(0), volatile=True)
-    img = img.cuda()
-    output = net.conv1(img)
-    output = output.cpu().data.numpy()[0]
+    with torch.no_grad():
+        img = ToTensor()(img).unsqueeze(0)
+        img = img.cuda()
+        output = net.conv1(img)
+        output = output.cpu().data.numpy()[0]
 
     fig, axes = plt.subplots(1, len(output))
     for i in range(len(output)):
