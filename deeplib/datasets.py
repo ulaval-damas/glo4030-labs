@@ -2,10 +2,9 @@ import math
 import random
 import numpy as np
 import torch
-import torch.utils.data
 import os
 import csv
-from torch.utils.data.sampler import SubsetRandomSampler
+from torch.utils.data import Subset, Dataset, DataLoader
 from torchvision.datasets.mnist import MNIST
 from torchvision.datasets.cifar import CIFAR10
 
@@ -13,15 +12,15 @@ from torchvision.datasets.cifar import CIFAR10
 BASE_PATH = '~/GLO-4030/datasets/'
 
 
-def load_mnist(download=False, path=os.path.join(BASE_PATH, 'mnist')):
-    train_dataset = MNIST(path, train=True, download=download)
-    test_dataset = MNIST(path, train=False, download=download)
+def load_mnist(path=os.path.join(BASE_PATH, 'mnist')):
+    train_dataset = MNIST(path, train=True, download=True)
+    test_dataset = MNIST(path, train=False, download=True)
     return train_dataset, test_dataset
 
 
-def load_cifar10(download=False, path=os.path.join(BASE_PATH, 'cifar10')):
-    train_dataset = CIFAR10(path, train=True, download=download)
-    test_dataset = CIFAR10(path, train=False, download=download)
+def load_cifar10(path=os.path.join(BASE_PATH, 'cifar10')):
+    train_dataset = CIFAR10(path, train=True, download=True)
+    test_dataset = CIFAR10(path, train=False, download=True)
     return train_dataset, test_dataset
 
 
@@ -48,28 +47,31 @@ def load_quotes(path=BASE_PATH, file_name='author-quote.txt'):
     return data
 
 
-def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True):
+def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True, seed=42):
     num_data = len(dataset)
     indices = np.arange(num_data)
 
     if shuffle:
+        np.random.seed(seed)
         np.random.shuffle(indices)
 
     split = math.floor(train_split * num_data)
     train_idx, valid_idx = indices[:split], indices[split:]
 
-    train_sampler = SubsetRandomSampler(train_idx)
-    valid_sampler = SubsetRandomSampler(valid_idx)
+    train_dataset = Subset(dataset, train_idx)
+    valid_dataset = Subset(dataset, valid_idx)
 
-    train_loader = torch.utils.data.DataLoader(dataset,
-                    batch_size=batch_size, sampler=train_sampler)
-    valid_loader = torch.utils.data.DataLoader(dataset,
-                    batch_size=batch_size, sampler=valid_sampler)
+    train_loader = DataLoader(train_dataset,
+                              batch_size=batch_size,
+                              shuffle=True)
+    valid_loader = DataLoader(valid_dataset,
+                              batch_size=batch_size,
+                              shuffle=True)
 
     return train_loader, valid_loader
 
 
-class SpiralDataset(torch.utils.data.Dataset):
+class SpiralDataset(Dataset):
 
     def __init__(self, n_points=1000, noise=0.2):
         self.points = torch.Tensor(n_points, 7)
