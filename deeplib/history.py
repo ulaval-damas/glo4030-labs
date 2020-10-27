@@ -74,3 +74,28 @@ class History:
         axes[2].plot(epochs, self.history['lr'], label='Lr')
 
         plt.show()
+
+
+def plot_poutyne_history(history):
+        epochs = list(range(1, len(history) + 1))
+
+        train_acc = [entry['acc'] for entry in history]
+        val_acc = [entry['val_acc'] for entry in history]
+        train_loss = [entry['loss'] for entry in history]
+        val_loss = [entry['val_loss'] for entry in history]
+
+        fig, axes = plt.subplots(2, 1)
+        plt.tight_layout()
+
+        axes[0].set_xlabel('Epochs')
+        axes[0].set_ylabel('Accuracy')
+        axes[0].plot(epochs, train_acc, label='Train')
+        axes[0].plot(epochs, val_acc, label='Validation')
+        axes[0].legend()
+
+        axes[1].set_xlabel('Epochs')
+        axes[1].set_ylabel('Loss')
+        axes[1].plot(epochs, train_loss, label='Train')
+        axes[1].plot(epochs, val_loss, label='Validation')
+
+        plt.show()
