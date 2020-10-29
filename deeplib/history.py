@@ -55,16 +55,14 @@ class History:
         epoch = len(self.history['train_acc'])
         epochs = [x for x in range(1, epoch + 1)]
 
-        fig, axes = plt.subplots(3, 1)
+        fig, axes = plt.subplots(3, 1, sharex=True)
         plt.tight_layout()
 
-        axes[0].set_xlabel('Epochs')
         axes[0].set_ylabel('Accuracy')
         axes[0].plot(epochs, self.history['train_acc'], label='Train')
         axes[0].plot(epochs, self.history['val_acc'], label='Validation')
         axes[0].legend()
 
-        axes[1].set_xlabel('Epochs')
         axes[1].set_ylabel('Loss')
         axes[1].plot(epochs, self.history['train_loss'], label='Train')
         axes[1].plot(epochs, self.history['val_loss'], label='Validation')
@@ -84,10 +82,9 @@ def plot_poutyne_history(history):
         train_loss = [entry['loss'] for entry in history]
         val_loss = [entry['val_loss'] for entry in history]
 
-        fig, axes = plt.subplots(2, 1)
+        fig, axes = plt.subplots(2, 1, sharex=True)
         plt.tight_layout()
 
-        axes[0].set_xlabel('Epochs')
         axes[0].set_ylabel('Accuracy')
         axes[0].plot(epochs, train_acc, label='Train')
         axes[0].plot(epochs, val_acc, label='Validation')
