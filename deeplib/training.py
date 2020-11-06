@@ -1,122 +1,98 @@
+import warnings
+import numpy as np
 import torch
 import torch.nn as nn
-import time
+from torch.utils.data import DataLoader
+from torchvision.transforms import ToTensor
 
-from sklearn.metrics import accuracy_score
-from torch.utils.data.sampler import SequentialSampler
+import poutyne as pt
 
 from deeplib.history import History
 from deeplib.datasets import train_valid_loaders
 
-from torch.autograd import Variable
-from torchvision.transforms import ToTensor
+
+def get_model(network, optimizer=None, criterion=None, use_gpu=True):
+    if criterion is None:
+        criterion = nn.CrossEntropyLoss()
+
+    model = pt.Model(network, optimizer, criterion, batch_metrics=['accuracy'])
+    if use_gpu:
+        if torch.cuda.is_available():
+            model.cuda()
+        else:
+            warnings.warn("Aucun GPU disponible")
+    return model
 
 
-def validate(model, val_loader, use_gpu=True):
-    model.train(False)
-    true = []
-    pred = []
-    val_loss = []
+def softmax(x, axis=1):
+    e_x = np.exp(x - x.max(axis=axis, keepdims=True))
+    return e_x / e_x.sum(axis=axis, keepdims=True)
 
-    criterion = nn.CrossEntropyLoss()
-    model.eval()
-
-    with torch.no_grad():
-        for j, (inputs, targets) in enumerate(val_loader):
-            if use_gpu:
-                inputs = inputs.cuda()
-                targets = targets.cuda()
-
-            output = model(inputs)
-
-            predictions = output.max(dim=1)[1]
-
-            val_loss.append(criterion(output, targets).item())
-            true.extend(targets.data.cpu().numpy().tolist())
-            pred.extend(predictions.data.cpu().numpy().tolist())
-
-    model.train(True)
-    return accuracy_score(true, pred) * 100, sum(val_loss) / len(val_loss)
-
-
-def validate_ranking(model, val_loader, use_gpu=True):
+def validate_ranking(network, dataset, batch_size, use_gpu=True, criterion=None):
+    dataset.transform = ToTensor()
+    loader = DataLoader(dataset, batch_size=batch_size)
 
     good = []
     errors = []
 
-    criterion = torch.nn.Softmax(dim=1)
-    model.eval()
+    model = get_model(network, use_gpu=use_gpu)
+    for inputs, targets in loader:
+        outputs = model.predict_on_batch(inputs)
+        probs = softmax(outputs)
+        predictions = outputs.argmax(1)
 
-    with torch.no_grad():
-        for inputs, targets in val_loader:
-            if use_gpu:
-                inputs = inputs.cuda()
-                targets = targets.cuda()
-
-            output = model(inputs)
-            output = criterion(output)
-
-            predictions = output.max(dim=1)[1]
-
-            for i in range(len(inputs)):
-                score = output[i][targets[i]].data
-                target = targets[i].item()
-                pred = predictions[i].item()
-                if target == pred:
-                    good.append((inputs[i].data.cpu().numpy(), score.item(), target, pred))
-                else:
-                    errors.append((inputs[i].data.cpu().numpy(), score.item(), target, pred))
+        inputs = inputs.cpu().numpy()
+        targets = targets.cpu().numpy()
+        for i in range(len(inputs)):
+            score = probs[i][targets[i]]
+            target = targets[i]
+            pred = predictions[i]
+            if target == pred:
+                good.append((inputs[i], score, target, pred))
+            else:
+                errors.append((inputs[i], score, target, pred))
 
     return good, errors
 
 
-def train(model, optimizer, dataset, n_epoch, batch_size, use_gpu=True, scheduler=None, criterion=None):
-    history = History()
+class HistoryCallback(pt.Callback):
+    def __init__(self):
+        super().__init__()
+        self.history = History()
 
-    if criterion is None:
-        criterion = nn.CrossEntropyLoss()
+    def on_epoch_end(self, epoch_number, logs):
+        self.history.save(logs['acc'], logs['val_acc'],
+                          logs['loss'], logs['val_loss'],
+                          self.model.optimizer.param_groups[0]['lr'])
+
+
+def train(network, optimizer, dataset, n_epoch, batch_size, use_gpu=True, criterion=None, callbacks=None):
+    history_callback = HistoryCallback()
+    callbacks = [history_callback] if callbacks is None else [history_callback] + callbacks
 
     dataset.transform = ToTensor()
-    train_loader, val_loader = train_valid_loaders(dataset, batch_size=batch_size)
+    train_loader, valid_loader = train_valid_loaders(dataset, batch_size=batch_size)
 
-    for i in range(n_epoch):
-        start = time.time()
-        do_epoch(criterion, model, optimizer, scheduler, train_loader, use_gpu)
-        end = time.time()
+    model = get_model(network, optimizer, criterion, use_gpu=use_gpu)
+    model.fit_generator(train_loader, valid_loader,
+                        epochs=n_epoch,
+                        callbacks=callbacks,
+                        progress_options=dict(coloring={
+                            "text_color": 'MAGENTA',
+                            "ratio_color": "CYAN",
+                            "metric_value_color": "LIGHTBLUE_EX",
+                            "time_color": "GREEN",
+                            "progress_bar_color": "MAGENTA"
+                        }))
 
-        train_acc, train_loss = validate(model, train_loader, use_gpu)
-        val_acc, val_loss = validate(model, val_loader, use_gpu)
-        history.save(train_acc, val_acc, train_loss, val_loss, optimizer.param_groups[0]['lr'])
-        print('Epoch {} - Train acc: {:.2f} - Val acc: {:.2f} - Train loss: {:.4f} - Val loss: {:.4f} - Training time: {:.2f}s'.format(i,
-                                                                                                              train_acc,
-                                                                                                              val_acc,
-                                                                                                              train_loss,
-                                                                                                              val_loss, end - start))
-
-    return history
+    return history_callback.history
 
 
-def do_epoch(criterion, model, optimizer, scheduler, train_loader, use_gpu):
-    model.train()
-    for inputs, targets in train_loader:
-        if use_gpu:
-            inputs = inputs.cuda()
-            targets = targets.cuda()
-
-        optimizer.zero_grad()
-        output = model(inputs)
-
-        loss = criterion(output, targets)
-        loss.backward()
-        optimizer.step()
-
-    if scheduler:
-        scheduler.step()
-
-def test(model, test_dataset, batch_size, use_gpu=True):
+def test(network, test_dataset, batch_size, use_gpu=True, criterion=None):
     test_dataset.transform = ToTensor()
-    sampler = SequentialSampler(test_dataset)
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, sampler=sampler)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size)
 
-    score, loss = validate(model, test_loader, use_gpu=use_gpu)
-    return score
+    model = get_model(network, criterion=criterion, use_gpu=use_gpu)
+    loss, acc = model.evaluate_generator(test_loader)
+
+    return acc
