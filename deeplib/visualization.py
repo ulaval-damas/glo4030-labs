@@ -189,9 +189,9 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, optimal=None, ba
     Trace les courbes de niveau d'une fonction 2D.
 
     Args:
-        fct: Fonction objective qui prend en paramètre un tenseur Nx2 correspondant à
+        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à
             N paramètres pour lesquels on veut obtenir la valeur de la fonction.
-        optimal: La valeur optimale des poids pour la fonction objective.
+        optimal: La valeur optimale des poids pour la fonction objectif.
     """
     w1_values = torch.arange(min_val, max_val+mesh_step, mesh_step)
     w2_values = torch.arange(min_val, max_val+mesh_step, mesh_step)
@@ -221,9 +221,9 @@ def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, opti
 
     Args:
         w_history: L'historique de la valeur des poids lors de l'entraînement.
-        fct: Fonction objective qui prend en paramètre un tenseur Nx2 correspondant à
+        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à
             N paramètres pour lesquels on veut obtenir la valeur de la fonction.
-        optimal: La valeur optimale des poids pour la fonction objective.
+        optimal: La valeur optimale des poids pour la fonction objectif.
     """
     show_2d_function(fct, min_val, max_val, mesh_step, optimal=optimal, ax=ax)
 
@@ -235,7 +235,7 @@ def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, opti
 
 def show_learning_curve(loss_list, loss_opt=None, ax=None):
     """
-    Trace le graphique des valeurs de la fonction objective lors de l'apprentissage.
+    Trace le graphique des valeurs de la fonction objectif lors de l'apprentissage.
 
     Args:
         loss_list: L'historique de la valeur de la perte lors de l'entraînement.
@@ -245,7 +245,7 @@ def show_learning_curve(loss_list, loss_opt=None, ax=None):
         plt.sca(ax)
     plt.plot(np.arange(1, len(loss_list) + 1), loss_list, 'o--', c='g', label='$F(\mathbf{w})$')
     if loss_opt is not None: plt.plot([1, len(loss_list)], 2*[loss_opt], '*--', c='r', label='optimal');
-    plt.title('Valeurs de la fonction objective'); plt.xlabel('Itérations')
+    plt.title('Valeurs de la fonction objectif'); plt.xlabel('Itérations')
     plt.legend()
 
 def show_optimization(w_history, loss_history, fct, optimal=None, title=None):
@@ -257,9 +257,9 @@ def show_optimization(w_history, loss_history, fct, optimal=None, title=None):
     Args:
         w_history: L'historique des poids lors de l'optimisation
         loss_history: L'historique de la valeur de la fonction perte.
-        fct: Fonction objective qui prend en paramètre un tenseur Nx2 correspondant à
+        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à
             N paramètres pour lesquels on veut obtenir la valeur de la fonction.
-        optimal: La valeur optimale des poids pour la fonction objective.
+        optimal: La valeur optimale des poids pour la fonction objectif.
     """
     fig, axes = plt.subplots(1, 2, figsize=(14.5, 4))
     if title is not None:
