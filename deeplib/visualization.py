@@ -182,3 +182,87 @@ def view_filters(net, img):
         axes[i].set_xticks([])
         axes[i].set_yticks([])
     plt.show()
+
+
+def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, optimal=None, bar=True, ax=None, **kwargs):
+    """
+    Trace les courbes de niveau d'une fonction 2D.
+
+    Args:
+        fct: Fonction objective qui prend en paramètre un tenseur Nx2 correspondant à
+            N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        optimal: La valeur optimale des poids pour la fonction objective.
+    """
+    w1_values = torch.arange(min_val, max_val+mesh_step, mesh_step)
+    w2_values = torch.arange(min_val, max_val+mesh_step, mesh_step)
+
+    w2, w1 = torch.meshgrid(w2_values, w1_values)
+    w_grid = torch.stack((w1.flatten(), w2.flatten()))
+    fct_values = fct(w_grid).view(w1_values.shape[0], w2.shape[0]).numpy()
+
+    if ax is not None:
+        plt.sca(ax)
+    if 'cmap' not in kwargs: kwargs['cmap'] = 'RdBu'
+    plt.contour(w1_values, w2_values, fct_values, 40, **kwargs)
+    plt.xlim((min_val, max_val))
+    plt.ylim((min_val, max_val))
+    plt.xlabel('$w_1$')
+    plt.ylabel('$w_1$')
+
+    if bar:
+        plt.colorbar()
+
+    if optimal is not None:
+        plt.scatter(*optimal, s=200, marker='*', c='r')
+
+def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, optimal=None, ax=None):
+    """
+    Trace le graphique de la trajectoire de descente en gradient en 2D.
+
+    Args:
+        w_history: L'historique de la valeur des poids lors de l'entraînement.
+        fct: Fonction objective qui prend en paramètre un tenseur Nx2 correspondant à
+            N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        optimal: La valeur optimale des poids pour la fonction objective.
+    """
+    show_2d_function(fct, min_val, max_val, mesh_step, optimal=optimal, ax=ax)
+
+    if len(w_history) > 0:
+        trajectory = np.array(w_history)
+        plt.plot(trajectory[:,0], trajectory[:,1], 'o--', c='g')
+
+    plt.title('Trajectoire de la descente en gradient'); plt.xlabel('$w_1$'); plt.ylabel('$w_2$')
+
+def show_learning_curve(loss_list, loss_opt=None, ax=None):
+    """
+    Trace le graphique des valeurs de la fonction objective lors de l'apprentissage.
+
+    Args:
+        loss_list: L'historique de la valeur de la perte lors de l'entraînement.
+        loss_opt: La valeur optimale de perte.
+    """
+    if ax is not None:
+        plt.sca(ax)
+    plt.plot(np.arange(1, len(loss_list) + 1), loss_list, 'o--', c='g', label='$F(\mathbf{w})$')
+    if loss_opt is not None: plt.plot([1, len(loss_list)], 2*[loss_opt], '*--', c='r', label='optimal');
+    plt.title('Valeurs de la fonction objective'); plt.xlabel('Itérations')
+    plt.legend()
+
+def show_optimization(w_history, loss_history, fct, optimal=None, title=None):
+    """
+    Trace deux graphiques montrant le trajet de l'optimisation. Le premier
+    montre la valeur des poids lors de l'optimisation. Le deuxième montre
+    la valeur de la perte lors de l'optimisation.
+
+    Args:
+        w_history: L'historique des poids lors de l'optimisation
+        loss_history: L'historique de la valeur de la fonction perte.
+        fct: Fonction objective qui prend en paramètre un tenseur Nx2 correspondant à
+            N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        optimal: La valeur optimale des poids pour la fonction objective.
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(14.5, 4))
+    if title is not None:
+        fig.suptitle(title)
+    show_2d_trajectory(w_history, fct, optimal=optimal, ax=axes[0])
+    show_learning_curve(loss_history, loss_opt=fct(optimal), ax=axes[1])
