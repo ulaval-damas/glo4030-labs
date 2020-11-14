@@ -76,14 +76,7 @@ def train(network, optimizer, dataset, n_epoch, batch_size, use_gpu=True, criter
     model = get_model(network, optimizer, criterion, use_gpu=use_gpu)
     model.fit_generator(train_loader, valid_loader,
                         epochs=n_epoch,
-                        callbacks=callbacks,
-                        progress_options=dict(coloring={
-                            "text_color": 'MAGENTA',
-                            "ratio_color": "GREEN",
-                            "metric_value_color": "LIGHTBLUE_EX",
-                            "time_color": "CYAN",
-                            "progress_bar_color": "MAGENTA"
-                        }))
+                        callbacks=callbacks)
 
     return history_callback.history
 
