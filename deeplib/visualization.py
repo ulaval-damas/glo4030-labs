@@ -171,7 +171,9 @@ def make_vizualization_autograd(var, params=None):
 
 def view_filters(net, img):
     with torch.no_grad():
-        img = ToTensor()(img).unsqueeze(0)
+        if not torch.is_tensor(img):
+            img = ToTensor()(img)
+        img = img.unsqueeze(0)
         img = img.cuda()
         output = net.conv1(img)
         output = output.cpu().data.numpy()[0]
