@@ -51,7 +51,7 @@ class History:
         plt.plot(epochs, self.history['lr'], label='Lr')
         plt.show()
 
-    def display(self, display_lr=True):
+    def display(self, display_lr=False):
         epoch = len(self.history['train_acc'])
         epochs = list(range(1, epoch + 1))
 
