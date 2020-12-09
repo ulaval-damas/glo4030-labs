@@ -6,7 +6,9 @@ import torch.nn.functional as F
 
 
 class DeepMnistNet(nn.Module):
-
+    """
+    Un simple réseau profonds à convolution pour MNIST avec convolutions, relus et max-pooling.
+    """
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 10, 3, padding=1)
@@ -35,7 +37,9 @@ class DeepMnistNet(nn.Module):
 
 
 class MnistNet(nn.Module):
-
+    """
+    Un simple réseau moins profonds pour MNIST que DeepMnistNet à convolution avec convolutions, relus et max-pooling.
+    """
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 10, 3, padding=1)
@@ -58,6 +62,9 @@ class MnistNet(nn.Module):
 
 
 class CifarNet(nn.Module):
+    """
+    Un simple réseau profonds à convolution pour CIFAR10 avec convolutions, relus et max-pooling.
+    """
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(3, 10, 3, padding=1)
@@ -75,6 +82,9 @@ class CifarNet(nn.Module):
 
 
 class CifarNetBatchNorm(nn.Module):
+    """
+    Un simple réseau profonds à convolution pour CIFAR10 avec batch normalization.
+    """
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(3, 10, 5, padding=1)

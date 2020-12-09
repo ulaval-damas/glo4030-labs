@@ -1,12 +1,11 @@
 '''
 From https://discuss.pytorch.org/t/print-autograd-graph/692/16
 '''
+import random
 from graphviz import Digraph
 import torch
 import matplotlib.pyplot as plt
-import random
 import numpy as np
-from torch.autograd import Variable
 from torchvision.transforms import ToTensor
 
 
@@ -90,7 +89,7 @@ def plot_images(images, cls_true, label_names=None, cls_pred=None, score=None, g
     assert len(images) == len(cls_true) == 9
 
     # Create figure with sub-plots.
-    fig, axes = plt.subplots(3, 3)
+    _, axes = plt.subplots(3, 3)
 
     for i, ax in enumerate(axes.flat):
         if gray:
@@ -119,7 +118,7 @@ def plot_images(images, cls_true, label_names=None, cls_pred=None, score=None, g
     plt.show()
 
 
-def make_vizualization_autograd(var, params=None):
+def make_vizualization_autograd(var):
     """ Produces Graphviz representation of PyTorch autograd graph.
 
     Blue nodes are trainable Variables (weights, bias).
@@ -127,10 +126,7 @@ def make_vizualization_autograd(var, params=None):
 
     Args:
         var: output Variable
-        params: list of (name, Parameters)
     """
-    #param_map = {id(v): k for k, v in params.items()}
-
     node_attr = dict(style='filled',
                      shape='box',
                      align='left',
@@ -149,7 +145,6 @@ def make_vizualization_autograd(var, params=None):
                 dot.node(str(id(var)), size_to_str(var.size()), fillcolor='orange')
             elif hasattr(var, 'variable'):
                 u = var.variable
-                # node_name = '%s\n %s' % (param_map.get(id(u)), size_to_str(u.size()))
                 node_name = '%s\n %s' % ("Var", size_to_str(u.size()))
                 dot.node(str(id(var)), node_name, fillcolor='lightblue')
             else:
@@ -178,15 +173,16 @@ def view_filters(net, img):
         output = net.conv1(img)
         output = output.cpu().data.numpy()[0]
 
-    fig, axes = plt.subplots(1, len(output))
-    for i in range(len(output)):
-        axes[i].imshow(output[i])
+    _, axes = plt.subplots(1, len(output))
+    for i, out in enumerate(output):
+        axes[i].imshow(out)
         axes[i].set_xticks([])
         axes[i].set_yticks([])
     plt.show()
 
 
-def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, optimal=None, bar=True, ax=None, **kwargs):
+def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, *, optimal=None, bar=True, ax=None, **kwargs):
+    # pylint: disable=blacklisted-name
     """
     Trace les courbes de niveau d'une fonction 2D.
 
@@ -204,7 +200,8 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, optimal=None, ba
 
     if ax is not None:
         plt.sca(ax)
-    if 'cmap' not in kwargs: kwargs['cmap'] = 'RdBu'
+    if 'cmap' not in kwargs:
+        kwargs['cmap'] = 'RdBu'
     plt.contour(w1_values, w2_values, fct_values, 40, **kwargs)
     plt.xlim((min_val, max_val))
     plt.ylim((min_val, max_val))
@@ -217,7 +214,7 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, optimal=None, ba
     if optimal is not None:
         plt.scatter(*optimal, s=200, marker='*', c='r')
 
-def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, optimal=None, ax=None):
+def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, *, optimal=None, ax=None):
     """
     Trace le graphique de la trajectoire de descente en gradient en 2D.
 
@@ -233,7 +230,9 @@ def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, opti
         trajectory = np.array(w_history)
         plt.plot(trajectory[:,0], trajectory[:,1], 'o--', c='g')
 
-    plt.title('Trajectoire de la descente en gradient'); plt.xlabel('$w_1$'); plt.ylabel('$w_2$')
+    plt.title('Trajectoire de la descente en gradient')
+    plt.xlabel('$w_1$')
+    plt.ylabel('$w_2$')
 
 def show_learning_curve(loss_list, loss_opt=None, ax=None):
     """
@@ -245,9 +244,11 @@ def show_learning_curve(loss_list, loss_opt=None, ax=None):
     """
     if ax is not None:
         plt.sca(ax)
-    plt.plot(np.arange(1, len(loss_list) + 1), loss_list, 'o--', c='g', label='$F(\mathbf{w})$')
-    if loss_opt is not None: plt.plot([1, len(loss_list)], 2*[loss_opt], '*--', c='r', label='optimal');
-    plt.title('Valeurs de la fonction objectif'); plt.xlabel('Itérations')
+    plt.plot(np.arange(1, len(loss_list) + 1), loss_list, 'o--', c='g', label='$F(\\mathbf{w})$')
+    if loss_opt is not None:
+        plt.plot([1, len(loss_list)], 2*[loss_opt], '*--', c='r', label='optimal')
+    plt.title('Valeurs de la fonction objectif')
+    plt.xlabel('Itérations')
     plt.legend()
 
 def show_optimization(w_history, loss_history, fct, optimal=None, title=None):

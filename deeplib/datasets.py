@@ -1,9 +1,8 @@
+import os
 import math
 import random
 import numpy as np
 import torch
-import os
-import csv
 from torch.utils.data import Subset, Dataset, DataLoader
 from torchvision.datasets.mnist import MNIST
 from torchvision.datasets.cifar import CIFAR10
@@ -22,29 +21,6 @@ def load_cifar10(path=os.path.join(BASE_PATH, 'cifar10')):
     train_dataset = CIFAR10(path, train=True, download=True)
     test_dataset = CIFAR10(path, train=False, download=True)
     return train_dataset, test_dataset
-
-
-def load_shakespear(path=BASE_PATH, file_name='Shakespeare_data.csv'):
-    full_path = os.path.join(path, file_name)
-    data = []
-    with open(full_path, 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            data.append(row)
-
-    only_lines = []
-    for x in data:
-        only_lines.append(x[5])
-    return only_lines
-
-def load_quotes(path=BASE_PATH, file_name='author-quote.txt'):
-    full_path = os.path.join(path, file_name)
-    data = []
-    file = open(full_path, 'r')
-    for line in file:
-        author, quote = line.split('\t')
-        data.append(quote)
-    return data
 
 
 def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True, seed=42):
@@ -107,8 +83,3 @@ class SpiralDataset(Dataset):
 
     def to_numpy(self):
         return self.points.numpy(), self.labels.numpy()
-
-
-if __name__ == '__main__':
-    mnist = load_mnist(download=True)
-    cifar = load_cifar10(download=True)
