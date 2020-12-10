@@ -12,18 +12,50 @@ BASE_PATH = '~/GLO-4030/datasets/'
 
 
 def load_mnist(path=os.path.join(BASE_PATH, 'mnist')):
+    """
+    Retourne l'ensemble d'entraînement du jeu de données MNIST. Le jeu de données est téléchargé s'il n'est pas présent.
+
+    Args:
+        path (str): Le répertoire où trouver ou télécharger MNIST.
+
+    Returns:
+        Tuple (jeu de données d'entraînement, jeu de données de test).
+    """
     train_dataset = MNIST(path, train=True, download=True)
     test_dataset = MNIST(path, train=False, download=True)
     return train_dataset, test_dataset
 
 
 def load_cifar10(path=os.path.join(BASE_PATH, 'cifar10')):
+    """
+    Retourne l'ensemble d'entraînement du jeu de données CIFAR10. Le jeu de données est téléchargé s'il n'est pas présent.
+
+    Args:
+        path (str): Le répertoire où trouver ou télécharger CIFAR10.
+
+    Returns:
+        Tuple (jeu de données d'entraînement, jeu de données de test).
+    """
     train_dataset = CIFAR10(path, train=True, download=True)
     test_dataset = CIFAR10(path, train=False, download=True)
     return train_dataset, test_dataset
 
 
 def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True, seed=42):
+    """
+    Divise un jeu de données en ensemble d'entraînement et de validation et retourne pour chacun un DataLoader PyTorch.
+
+    Args:
+        dataset (torch.utils.data.Dataset): Un jeu de données PyTorch
+        batch_size (int): La taille de batch désirée pour le DataLoader
+        train_split (float): Un nombre entre 0 et 1 correspondant à la proportion d'exemple de l'ensemble
+            d'entraînement.
+        shuffle (bool): Si les exemples sont mélangés aléatoirement avant de diviser le jeu de données.
+        seed (int): Le seed aléatoire pour que l'ordre des exemples mélangés soit toujours le même.
+
+    Returns:
+        Tuple (DataLoader d'entraînement, DataLoader de test).
+    """
     num_data = len(dataset)
     indices = np.arange(num_data)
 
@@ -48,6 +80,13 @@ def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True, seed
 
 
 class SpiralDataset(Dataset):
+    """
+    Un jeu de données synthétique de spiral pour PyTorch.
+
+    Args:
+        n_points (int): Le nombre de point désiré dans le jeu de données
+        noise (float): Quantité de bruit désiré dans le jeu de données
+    """
 
     def __init__(self, n_points=1000, noise=0.2):
         self.points = torch.Tensor(n_points, 7)

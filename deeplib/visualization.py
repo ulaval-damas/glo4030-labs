@@ -10,6 +10,13 @@ from torchvision.transforms import ToTensor
 
 
 def show_worst(results):
+    """
+    Affiche les images de CIFAR10 qui induisent le réseau le plus en erreur, c'est-à-dire que les images dont la
+    probabilité de prédiction de la vraie classe était parmi les plus basse.
+
+    Args:
+        results (List[Tuple]): Une liste de tuple telle que retournée par `deeplib.training.validate_ranking`.
+    """
     worst_results = []
     for i, result in enumerate(results):
         if len(worst_results) < 9:
@@ -34,6 +41,13 @@ def show_worst(results):
 
 
 def show_best(results):
+    """
+    Affiche les images de CIFAR10 dont le réseau fait les meilleurs prédictions, c'est-à-dire que les images dont la
+    probabilité de prédiction de la vraie classe était parmi les plus élevée.
+
+    Args:
+        results (List[Tuple]): Une liste de tuple telle que retournée par `deeplib.training.validate_ranking`.
+    """
     best_results = []
     for i, result in enumerate(results):
         if len(best_results) < 9:
@@ -58,6 +72,12 @@ def show_best(results):
 
 
 def show_random(results):
+    """
+    Affiche des images aléatoires de CIFAR10.
+
+    Args:
+        results (List[Tuple]): Une liste de tuple telle que retournée par `deeplib.training.validate_ranking`.
+    """
     test = random.sample(results, 9)
     imgs, true, pred = [], [], []
     for i in range(9):
@@ -70,6 +90,16 @@ def show_random(results):
 
 
 def plot_cifar_images(images, cls_true, cls_pred=None, score=None):
+    """
+    Affiche une batch d'images de CIFAR10 avec différentes informations en fonction de ce qui est founir en argument.
+
+    Args:
+        images (np.ndarray): Une batch d'images de CIFAR10 sous la forme d'un array Numpy
+        cls_true (list): Une liste contenant les classes respectives des images
+        cls_pred (list): Une liste contenant les classes prédites des images
+        score (list): Une liste contenant des probabilités des images (de n'importe quelle nature)
+    """
+
     label_names = [
         'airplane',
         'automobile',
@@ -82,10 +112,22 @@ def plot_cifar_images(images, cls_true, cls_pred=None, score=None):
         'ship',
         'truck'
     ]
-    plot_images(images, cls_true, label_names, cls_pred, score)
+    plot_images(images, cls_true, label_names=label_names, cls_pred=cls_pred, score=score)
 
 
-def plot_images(images, cls_true, label_names=None, cls_pred=None, score=None, gray=False):
+def plot_images(images, cls_true, *, label_names=None, cls_pred=None, score=None, gray=False):
+    """
+    Affiche une batch d'images avec différentes informations en fonction de ce qui est founir en argument.
+
+    Args:
+        images (np.ndarray): Une batch d'images sous la forme d'un array Numpy
+        cls_true (list): Une liste contenant les classes respectives des images
+        label_names (list): Une liste de string pour toutes les classes. L'index i de la liste devrait contenir le nom
+            de la classe i.
+        cls_pred (list): Une liste contenant les classes prédites des images
+        score (list): Une liste contenant des probabilités des images (de n'importe quelle nature)
+        gray (bool): Si c'est des images en teinte de gris.
+    """
     assert len(images) == len(cls_true) == 9
 
     # Create figure with sub-plots.
@@ -121,11 +163,11 @@ def plot_images(images, cls_true, label_names=None, cls_pred=None, score=None, g
 def make_vizualization_autograd(var):
     """ Produces Graphviz representation of PyTorch autograd graph.
 
-    Blue nodes are trainable Variables (weights, bias).
+    Blue nodes are trainable parameters (weights, bias).
     Orange node are saved tensors for the backward pass.
 
     Args:
-        var: output Variable
+        var: output tensor
     """
     node_attr = dict(style='filled',
                      shape='box',
@@ -165,13 +207,21 @@ def make_vizualization_autograd(var):
 
 
 def view_filters(net, img):
+    """
+    Affiche le résultat des filtres à convolution sur une image. On suppose que le réseau a une couche `conv1` qui peut
+    être appliqué sur la batch d'images passée en paramètre.
+
+    Args:
+        network (nn.Module): Un réseau de neurones PyTorch avec une couche `conv1`.
+        img (Union[PILImage, torch.Tensor]): Une image.
+    """
     with torch.no_grad():
         if not torch.is_tensor(img):
             img = ToTensor()(img)
         img = img.unsqueeze(0)
         img = img.cuda()
         output = net.conv1(img)
-        output = output.cpu().data.numpy()[0]
+        output = output.cpu().numpy()[0]
 
     _, axes = plt.subplots(1, len(output))
     for i, out in enumerate(output):
@@ -187,8 +237,8 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, *, optimal=None,
     Trace les courbes de niveau d'une fonction 2D.
 
     Args:
-        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à
-            N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à N paramètres pour lesquels on veut
+            obtenir la valeur de la fonction.
         optimal: La valeur optimale des poids pour la fonction objectif.
     """
     w1_values = torch.arange(min_val, max_val+mesh_step, mesh_step)
@@ -220,8 +270,8 @@ def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, *, o
 
     Args:
         w_history: L'historique de la valeur des poids lors de l'entraînement.
-        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à
-            N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à N paramètres pour lesquels on veut
+            obtenir la valeur de la fonction.
         optimal: La valeur optimale des poids pour la fonction objectif.
     """
     show_2d_function(fct, min_val, max_val, mesh_step, optimal=optimal, ax=ax)
@@ -253,15 +303,14 @@ def show_learning_curve(loss_list, loss_opt=None, ax=None):
 
 def show_optimization(w_history, loss_history, fct, optimal=None, title=None):
     """
-    Trace deux graphiques montrant le trajet de l'optimisation. Le premier
-    montre la valeur des poids lors de l'optimisation. Le deuxième montre
-    la valeur de la perte lors de l'optimisation.
+    Trace deux graphiques montrant le trajet de l'optimisation d'une fonction objectif 2D. Le premier montre la valeur
+    des poids lors de l'optimisation. Le deuxième montre la valeur de la perte lors de l'optimisation.
 
     Args:
         w_history: L'historique des poids lors de l'optimisation
         loss_history: L'historique de la valeur de la fonction perte.
-        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à
-            N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à N paramètres pour lesquels on veut
+            obtenir la valeur de la fonction.
         optimal: La valeur optimale des poids pour la fonction objectif.
     """
     fig, axes = plt.subplots(1, 2, figsize=(14.5, 4))
