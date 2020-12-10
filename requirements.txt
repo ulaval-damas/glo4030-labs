@@ -12,3 +12,4 @@ gensim
 numpy
 scipy
 Pillow
+poutyne
