@@ -1,5 +1,6 @@
 from collections import defaultdict
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 
 class History:
@@ -58,7 +59,9 @@ class History:
             axes[2].set_xlabel('Epochs')
             axes[2].set_ylabel('Lr')
             axes[2].plot(epochs, self.history['lr'], label='Lr')
+            axes[2].xaxis.set_major_locator(MaxNLocator(integer=True))
         else:
             axes[1].set_xlabel('Epochs')
+            axes[1].xaxis.set_major_locator(MaxNLocator(integer=True))
 
         plt.show()
