@@ -7,7 +7,6 @@ from torch.utils.data import Subset, Dataset, DataLoader
 from torchvision.datasets.mnist import MNIST
 from torchvision.datasets.cifar import CIFAR10
 
-
 BASE_PATH = '~/GLO-4030/datasets/'
 
 
@@ -28,7 +27,8 @@ def load_mnist(path=os.path.join(BASE_PATH, 'mnist')):
 
 def load_cifar10(path=os.path.join(BASE_PATH, 'cifar10')):
     """
-    Retourne l'ensemble d'entraînement du jeu de données CIFAR10. Le jeu de données est téléchargé s'il n'est pas présent.
+    Retourne l'ensemble d'entraînement du jeu de données CIFAR10. Le jeu de données est téléchargé s'il n'est pas
+    présent.
 
     Args:
         path (str): Le répertoire où trouver ou télécharger CIFAR10.
@@ -69,12 +69,8 @@ def train_valid_loaders(dataset, batch_size, train_split=0.8, shuffle=True, seed
     train_dataset = Subset(dataset, train_idx)
     valid_dataset = Subset(dataset, valid_idx)
 
-    train_loader = DataLoader(train_dataset,
-                              batch_size=batch_size,
-                              shuffle=True)
-    valid_loader = DataLoader(valid_dataset,
-                              batch_size=batch_size,
-                              shuffle=True)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    valid_loader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=True)
 
     return train_loader, valid_loader
 
@@ -99,9 +95,8 @@ class SpiralDataset(Dataset):
             self.points[i], self.labels[i] = point, 1
 
         for i, point in enumerate(self._gen_spiral_points(n_negative, math.pi, noise)):
-            self.points[i+n_positive] = point
-            self.labels[i+n_positive] = 0
-
+            self.points[i + n_positive] = point
+            self.labels[i + n_positive] = 0
 
     def _gen_spiral_points(self, n_points, delta_t, noise):
         for i in range(n_points):
@@ -109,16 +104,13 @@ class SpiralDataset(Dataset):
             t = 1.75 * i / n_points * 2 * math.pi + delta_t
             x = r * math.sin(t) + random.uniform(-1, 1) * noise
             y = r * math.cos(t) + random.uniform(-1, 1) * noise
-            yield torch.Tensor([x, y, x**2, y**2, x*y, math.sin(x), math.sin(y)])
-
+            yield torch.Tensor([x, y, x**2, y**2, x * y, math.sin(x), math.sin(y)])
 
     def __len__(self):
         return len(self.labels)
 
-
     def __getitem__(self, i):
         return self.points[i], self.labels[i]
-
 
     def to_numpy(self):
         return self.points.numpy(), self.labels.numpy()

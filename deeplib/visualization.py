@@ -100,18 +100,7 @@ def plot_cifar_images(images, cls_true, cls_pred=None, score=None):
         score (list): Une liste contenant des probabilités des images (de n'importe quelle nature)
     """
 
-    label_names = [
-        'airplane',
-        'automobile',
-        'bird',
-        'cat',
-        'deer',
-        'dog',
-        'frog',
-        'horse',
-        'ship',
-        'truck'
-    ]
+    label_names = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
     plot_images(images, cls_true, label_names=label_names, cls_pred=cls_pred, score=score)
 
 
@@ -169,17 +158,12 @@ def make_vizualization_autograd(var):
     Args:
         var: output tensor
     """
-    node_attr = dict(style='filled',
-                     shape='box',
-                     align='left',
-                     fontsize='12',
-                     ranksep='0.1',
-                     height='0.2')
+    node_attr = dict(style='filled', shape='box', align='left', fontsize='12', ranksep='0.1', height='0.2')
     dot = Digraph(node_attr=node_attr, graph_attr=dict(size="12,12"))
     seen = set()
 
     def size_to_str(size):
-        return '('+(', ').join(['%d'% v for v in size])+')'
+        return '(' + ', '.join(['%d' % v for v in size]) + ')'
 
     def add_nodes(var):
         if var not in seen:
@@ -201,6 +185,7 @@ def make_vizualization_autograd(var):
                 for t in var.saved_tensors:
                     dot.edge(str(id(t)), str(id(var)))
                     add_nodes(t)
+
     add_nodes(var.grad_fn)
 
     return dot
@@ -241,8 +226,8 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, *, optimal=None,
             obtenir la valeur de la fonction.
         optimal: La valeur optimale des poids pour la fonction objectif.
     """
-    w1_values = torch.arange(min_val, max_val+mesh_step, mesh_step)
-    w2_values = torch.arange(min_val, max_val+mesh_step, mesh_step)
+    w1_values = torch.arange(min_val, max_val + mesh_step, mesh_step)
+    w2_values = torch.arange(min_val, max_val + mesh_step, mesh_step)
 
     w2, w1 = torch.meshgrid(w2_values, w1_values)
     w_grid = torch.stack((w1.flatten(), w2.flatten()))
@@ -264,6 +249,7 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, *, optimal=None,
     if optimal is not None:
         plt.scatter(*optimal, s=200, marker='*', c='r')
 
+
 def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, *, optimal=None, ax=None):
     """
     Trace le graphique de la trajectoire de descente en gradient en 2D.
@@ -278,11 +264,12 @@ def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, *, o
 
     if len(w_history) > 0:
         trajectory = np.array(w_history)
-        plt.plot(trajectory[:,0], trajectory[:,1], 'o--', c='g')
+        plt.plot(trajectory[:, 0], trajectory[:, 1], 'o--', c='g')
 
     plt.title('Trajectoire de la descente en gradient')
     plt.xlabel('$w_1$')
     plt.ylabel('$w_2$')
+
 
 def show_learning_curve(loss_list, loss_opt=None, ax=None):
     """
@@ -296,10 +283,11 @@ def show_learning_curve(loss_list, loss_opt=None, ax=None):
         plt.sca(ax)
     plt.plot(np.arange(1, len(loss_list) + 1), loss_list, 'o--', c='g', label='$F(\\mathbf{w})$')
     if loss_opt is not None:
-        plt.plot([1, len(loss_list)], 2*[loss_opt], '*--', c='r', label='optimal')
+        plt.plot([1, len(loss_list)], 2 * [loss_opt], '*--', c='r', label='optimal')
     plt.title('Valeurs de la fonction objectif')
     plt.xlabel('Itérations')
     plt.legend()
+
 
 def show_optimization(w_history, loss_history, fct, optimal=None, title=None):
     """

@@ -11,6 +11,7 @@ class History:
         logs_list (List[Dict], optionnel): Un liste de dictionnaire contenant les différentes métrique pour chaque
             epoch. Le dictionnaire devrait avoir les mêmes clés que prises par la méthode `save()`.
     """
+
     def __init__(self, logs_list=None):
         self.history = defaultdict(list)
 

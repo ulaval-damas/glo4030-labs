@@ -47,6 +47,7 @@ def softmax(x, axis=1):
     e_x = np.exp(x - x.max(axis=axis, keepdims=True))
     return e_x / e_x.sum(axis=axis, keepdims=True)
 
+
 def validate_ranking(network, dataset, batch_size, use_gpu=True):
     """
     Sépare les exemples d'un jeu de données en deux listes: une liste d'exemple bien classifié et une liste d'exemple
@@ -104,6 +105,7 @@ class HistoryCallback(pt.Callback):
     Attributes:
         history (deeplib.history.History): L'objet d'historique de deeplib.
     """
+
     def __init__(self):
         super().__init__()
         self.history = History()
@@ -139,8 +141,10 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
     train_loader, valid_loader = train_valid_loaders(dataset, batch_size=batch_size)
 
     model = get_model(network, optimizer, criterion, use_gpu=use_gpu)
-    model.fit_generator(train_loader, valid_loader,
-                        epochs=n_epoch, progress_options=dict(coloring=False),
+    model.fit_generator(train_loader,
+                        valid_loader,
+                        epochs=n_epoch,
+                        progress_options=dict(coloring=False),
                         callbacks=callbacks)
 
     return history_callback.history

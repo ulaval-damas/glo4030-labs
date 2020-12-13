@@ -6,9 +6,11 @@ import torch.nn.functional as F
 
 
 class DeepMnistNet(nn.Module):
+    # pylint: disable=too-many-instance-attributes
     """
     Un simple réseau profonds à convolution pour MNIST avec convolutions, relus et max-pooling.
     """
+
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 10, 3, padding=1)
@@ -40,6 +42,7 @@ class MnistNet(nn.Module):
     """
     Un simple réseau moins profonds pour MNIST que DeepMnistNet à convolution avec convolutions, relus et max-pooling.
     """
+
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 10, 3, padding=1)
@@ -65,6 +68,7 @@ class CifarNet(nn.Module):
     """
     Un simple réseau profonds à convolution pour CIFAR10 avec convolutions, relus et max-pooling.
     """
+
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(3, 10, 3, padding=1)
@@ -85,6 +89,7 @@ class CifarNetBatchNorm(nn.Module):
     """
     Un simple réseau profonds à convolution pour CIFAR10 avec batch normalization.
     """
+
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(3, 10, 5, padding=1)
@@ -93,12 +98,12 @@ class CifarNetBatchNorm(nn.Module):
         self.bn2 = nn.BatchNorm2d(50)
         self.conv3 = nn.Conv2d(50, 150, 3, padding=1, stride=2)
         self.bn3 = nn.BatchNorm2d(150)
-        self.fc1 = nn.Linear(2400 , 10)
+        self.fc1 = nn.Linear(2400, 10)
 
     def forward(self, x):
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
-        x = F.max_pool2d(F.relu(self.bn3(self.conv3(x))), (2,2))
+        x = F.max_pool2d(F.relu(self.bn3(self.conv3(x))), (2, 2))
         x = x.flatten(1)
         x = self.fc1(x)
         return x
