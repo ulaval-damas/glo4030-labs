@@ -15,6 +15,7 @@ jobs:
         python-version: '3.8'
     - name: Install dependencies
       run: |
+        pip install -r requirements.txt
         pip install -r styling_requirements.txt
     - name: Yapf
       run: yapf --diff --recursive deeplib/
