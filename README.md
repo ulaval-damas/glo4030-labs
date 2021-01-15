@@ -46,9 +46,9 @@ Les prochaines étapes se font en ligne de commande directement dans Jupyter:
    maintenant en raccourci dans votre $HOME.
 5. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/glo4030-labs/Laboratoire\ 1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
-   qu'en lecture seule aux fichiers du répertoire du cours.
-6. Copier la librairie `deeplib` dans votre $HOME `cp -r GLO-4030/glo4030-labs/deeplib/ ./`
-7. Quitter la console avec CTRL-D puis fermez la fenêtre.
+   qu'en lecture seule aux fichiers du répertoire du cours. Vous aurez à répéter cette opération
+   lors de chaque laboratoire.
+6. Quitter la console avec CTRL-D puis fermez la fenêtre.
 
 
 À cette étape, vous devriez avoir un kernel Jupyter fonctionnel. Dans la liste
@@ -79,7 +79,5 @@ Le seul prérequis est d'avoir un compte Google.
 Il est possible d'installer en local les laboratoires. Il vous faudra idéalement
 une machine avec GPU. Les dépendances sont les suivantes:
 
-- cuda
-- cudnn
-- pytorch http://pytorch.org/
+- pytorch: Voir le site web (http://pytorch.org/) pour plus détails concernant l'installation)
 - les dépendances du fichier `requirements.txt` (avec `pip install -r requirements.txt`)
