@@ -1,7 +1,5 @@
 torch
 torchvision
-torchtext
-torchaudio
 pandas
 ipykernel
 matplotlib
