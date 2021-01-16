@@ -17,8 +17,8 @@ minute la plupart du temps. Voici les étapes à suivre:
 3. Remplir le formulaire avec les informations suivantes:
     - Number of cores: entre 1 et 4
     - Memory: 2048
-    - GPU configuration: 1 x K20
-    - Reservation: GLO7030 sur les heures de laboratoire, sinon None
+    - GPU configuration: 1 x K80
+    - Reservation: GLO7030 sur les heures réservées, sinon None
     - Garder les choix par défaut pour le reste des options
 4. Appuyer sur le bouton *Spawn*
 
