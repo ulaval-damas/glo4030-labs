@@ -16,7 +16,7 @@ minute la plupart du temps. Voici les étapes à suivre:
 2. Vous connecter avec votre compte Calcul Canada
 3. Remplir le formulaire avec les informations suivantes:
     - Number of cores: entre 1 et 4
-    - Memory: 8192
+    - Memory: au moins 8192
     - GPU configuration: 1 x K80 **Important! Les cartes K20 ne fonctionnent plus 
       avec les versions récentes de PyTorch**
     - Reservation: GLO7030 sur les heures réservées, sinon None
