@@ -11,7 +11,7 @@ from deeplib.history import History
 from deeplib.datasets import train_valid_loaders
 
 
-def get_model(network, optimizer=None, criterion=None, use_gpu=True):
+def get_model(network, optimizer=None, criterion=None, use_gpu=True, acc=True):
     """
     Obtient un modèle Poutyne pour un réseau de neurones PyTorch. On suppose que la sortie du réseau est compatible avec
     la fonction cross-entropy de PyTorch pour pouvoir utiliser l'exactitude (accuracy).
@@ -22,11 +22,13 @@ def get_model(network, optimizer=None, criterion=None, use_gpu=True):
         criterion: Une fonction de perte compatible avec la cross-entropy de PyTorch
         use_gpu (bool): Si on veut utiliser le GPU. Est vrai par défaut. Un avertissement est lancé s'il n'y a pas de
             GPU.
+        acc (bool): Si on veut inclure l'exactitude (accuracy) comme métrique à calculer.
     """
     if criterion is None:
         criterion = nn.CrossEntropyLoss()
 
-    model = pt.Model(network, optimizer, criterion, batch_metrics=['accuracy'])
+    batch_metrics = ['accuracy'] if acc else []
+    model = pt.Model(network, optimizer, criterion, batch_metrics=batch_metrics)
     if use_gpu:
         if torch.cuda.is_available():
             model.cuda()
@@ -114,7 +116,7 @@ class HistoryCallback(pt.Callback):
         self.history.save(dict(**logs, lr=self.model.optimizer.param_groups[0]['lr']))
 
 
-def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, criterion=None, callbacks=None):
+def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, criterion=None, callbacks=None, acc=True):
     """
     Entraîne un réseau de neurones PyTorch avec Poutyne. On suppose que la sortie du réseau est compatible avec
     la fonction cross-entropy de PyTorch pour calculer l'exactitude (accuracy).
@@ -130,6 +132,7 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
         criterion: Une fonction de perte compatible avec la cross-entropy de PyTorch.
         callbacks (List[poutyne.Callback]): Une liste de callbacks de Poutyne (utile pour les horaires d'entrainement
             entre autres).
+        acc (bool): Si on veut inclure l'exactitude (accuracy) comme métrique à calculer.
 
     Returns:
         Retourne un objet de type `deeplib.history.History` contenant l'historique d'entraînement.
@@ -140,7 +143,7 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
     dataset.transform = ToTensor()
     train_loader, valid_loader = train_valid_loaders(dataset, batch_size=batch_size)
 
-    model = get_model(network, optimizer, criterion, use_gpu=use_gpu)
+    model = get_model(network, optimizer, criterion, use_gpu=use_gpu, acc=acc)
     model.fit_generator(train_loader,
                         valid_loader,
                         epochs=n_epoch,
@@ -150,7 +153,7 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
     return history_callback.history
 
 
-def test(network, test_dataset, batch_size, use_gpu=True, criterion=None):
+def test(network, test_dataset, batch_size, use_gpu=True, criterion=None, acc=True):
     """
     Test un réseau de neurones PyTorch avec Poutyne. On suppose que la sortie du réseau est compatible avec
     la fonction cross-entropy de PyTorch pour calculer l'exactitude (accuracy).
@@ -169,7 +172,7 @@ def test(network, test_dataset, batch_size, use_gpu=True, criterion=None):
     test_dataset.transform = ToTensor()
     test_loader = DataLoader(test_dataset, batch_size=batch_size)
 
-    model = get_model(network, criterion=criterion, use_gpu=use_gpu)
-    _, acc = model.evaluate_generator(test_loader)
+    model = get_model(network, criterion=criterion, use_gpu=use_gpu, acc=acc)
+    metrics = model.evaluate_generator(test_loader)
 
-    return acc
+    return metrics[1] if acc else metrics
