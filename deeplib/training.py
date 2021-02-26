@@ -153,7 +153,7 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
     return history_callback.history
 
 
-def test(network, test_dataset, batch_size, use_gpu=True, criterion=None, acc=True):
+def test(network, test_dataset, batch_size, *, use_gpu=True, criterion=None, acc=True):
     """
     Test un réseau de neurones PyTorch avec Poutyne. On suppose que la sortie du réseau est compatible avec
     la fonction cross-entropy de PyTorch pour calculer l'exactitude (accuracy).

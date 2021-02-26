@@ -66,23 +66,23 @@ class History:
             axes[1].xaxis.set_major_locator(MaxNLocator(integer=True))
 
         plt.show()
-        
+
     def display_loss(self):
         """
-        Affiche le graphique pour les pertes en entraînement et en validation 
+        Affiche le graphique pour les pertes en entraînement et en validation
 
         """
         epoch = len(self.history['loss'])
         epochs = list(range(1, epoch + 1))
 
         plt.tight_layout()
-        
+
         plt.plot(epochs, self.history['loss'], label='Train')
         plt.plot(epochs, self.history['val_loss'], label='Validation')
         plt.ylabel('Loss')
         plt.xlabel('Epochs')
         plt.legend()
-        
+
         ax = plt.gca()
         ax.xaxis.set_major_locator(MaxNLocator(integer=True))
 
