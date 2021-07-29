@@ -144,7 +144,8 @@ disable=print-statement,
         missing-class-docstring,
         invalid-name,
         logging-fstring-interpolation,
-        no-self-use
+        no-self-use,
+        consider-using-from-import
 
 
 # Enable the message, report, category or checker with the given id(s). You can
