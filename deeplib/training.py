@@ -147,7 +147,6 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
     model.fit_generator(train_loader,
                         valid_loader,
                         epochs=n_epoch,
-                        progress_options=dict(coloring=False),
                         callbacks=callbacks)
 
     return history_callback.history

@@ -222,9 +222,9 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, *, optimal=None,
     Trace les courbes de niveau d'une fonction 2D.
 
     Args:
-        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à N paramètres pour lesquels on veut
-            obtenir la valeur de la fonction.
-        optimal: La valeur optimale des poids pour la fonction objectif.
+        fct (Callable[torch.Tensor, torch.Tensor]): Fonction objectif qui prend en paramètre un tenseur Nx2
+            correspondant à N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        optimal (torch.Tensor): La valeur optimale des poids pour la fonction objectif.
     """
     w1_values = torch.arange(min_val, max_val + mesh_step, mesh_step)
     w2_values = torch.arange(min_val, max_val + mesh_step, mesh_step)
@@ -232,6 +232,8 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, *, optimal=None,
     w2, w1 = torch.meshgrid(w2_values, w1_values)
     w_grid = torch.stack((w1.flatten(), w2.flatten()))
     fct_values = fct(w_grid).view(w1_values.shape[0], w2.shape[0]).numpy()
+
+    w1_values, w2_values = w1_values.numpy(), w2_values.numpy()
 
     if ax is not None:
         plt.sca(ax)
@@ -247,7 +249,7 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, *, optimal=None,
         plt.colorbar()
 
     if optimal is not None:
-        plt.scatter(*optimal, s=200, marker='*', c='r')
+        plt.scatter(*optimal.numpy(), s=200, marker='*', c='r')
 
 
 def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, *, optimal=None, ax=None):
@@ -256,9 +258,9 @@ def show_2d_trajectory(w_history, fct, min_val=-5, max_val=5, mesh_step=.5, *, o
 
     Args:
         w_history: L'historique de la valeur des poids lors de l'entraînement.
-        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à N paramètres pour lesquels on veut
-            obtenir la valeur de la fonction.
-        optimal: La valeur optimale des poids pour la fonction objectif.
+        fct (Callable[torch.Tensor, torch.Tensor]): Fonction objectif qui prend en paramètre un tenseur Nx2
+            correspondant à N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        optimal (torch.Tensor): La valeur optimale des poids pour la fonction objectif.
     """
     show_2d_function(fct, min_val, max_val, mesh_step, optimal=optimal, ax=ax)
 
@@ -297,12 +299,12 @@ def show_optimization(w_history, loss_history, fct, optimal=None, title=None):
     Args:
         w_history: L'historique des poids lors de l'optimisation
         loss_history: L'historique de la valeur de la fonction perte.
-        fct: Fonction objectif qui prend en paramètre un tenseur Nx2 correspondant à N paramètres pour lesquels on veut
-            obtenir la valeur de la fonction.
-        optimal: La valeur optimale des poids pour la fonction objectif.
+        fct (Callable[torch.Tensor, torch.Tensor]): Fonction objectif qui prend en paramètre un tenseur Nx2
+            correspondant à N paramètres pour lesquels on veut obtenir la valeur de la fonction.
+        optimal (torch.Tensor): La valeur optimale des poids pour la fonction objectif.
     """
     fig, axes = plt.subplots(1, 2, figsize=(14.5, 4))
     if title is not None:
         fig.suptitle(title)
     show_2d_trajectory(w_history, fct, optimal=optimal, ax=axes[0])
-    show_learning_curve(loss_history, loss_opt=fct(optimal), ax=axes[1])
+    show_learning_curve(loss_history, loss_opt=fct(optimal).numpy(), ax=axes[1])
