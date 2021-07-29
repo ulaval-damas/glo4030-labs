@@ -144,10 +144,7 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
     train_loader, valid_loader = train_valid_loaders(dataset, batch_size=batch_size)
 
     model = get_model(network, optimizer, criterion, use_gpu=use_gpu, acc=acc)
-    model.fit_generator(train_loader,
-                        valid_loader,
-                        epochs=n_epoch,
-                        callbacks=callbacks)
+    model.fit_generator(train_loader, valid_loader, epochs=n_epoch, callbacks=callbacks)
 
     return history_callback.history
 
