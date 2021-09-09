@@ -25,7 +25,7 @@ minute la plupart du temps. Voici les étapes à suivre:
 
 
 Une fois connecté, vous devriez avoir accès au système de fichier. Le répertoire
-du cours se situe au `/project/glo7030/`. Il contient les jeux de
+du cours se situe au `/project/glo4030/`. Il contient les jeux de
 données, les laboratoires et l'environnement virtuel python.
 
 
@@ -38,12 +38,12 @@ données, les laboratoires et l'environnement virtuel python.
 Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 
 1. Ouvrir un terminal en cliquant sur New > Terminal
-2. `source /project/glo7030/venv/bin/activate`
+2. `source /project/glo4030/venv/bin/activate`
 3. Créer un kernel Jupyer de l'environnement (cela permet de lancer des
    notebooks dans l'environnement virtuel): `python -m ipykernel install
    --user --name glo4030-7030`
 4. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
-   avec `ln -s /project/glo7030/ ~/GLO-4030`. Le répertoire du cours est
+   avec `ln -s /project/glo4030/ ~/GLO-4030`. Le répertoire du cours est
    maintenant en raccourci dans votre $HOME.
 5. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/glo4030-labs/Laboratoire\ 1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
