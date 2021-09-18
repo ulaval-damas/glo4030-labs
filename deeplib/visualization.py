@@ -243,7 +243,7 @@ def show_2d_function(fct, min_val=-5, max_val=5, mesh_step=.01, *, optimal=None,
     plt.xlim((min_val, max_val))
     plt.ylim((min_val, max_val))
     plt.xlabel('$w_1$')
-    plt.ylabel('$w_1$')
+    plt.ylabel('$w_2$')
 
     if bar:
         plt.colorbar()
