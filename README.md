@@ -53,7 +53,9 @@ Les prochaines étapes se font en ligne de commande directement dans Jupyter:
    lors de chaque laboratoire.
 6. Quitter la console avec CTRL-D.
 
-Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Une fois ouvert, faire
+Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Si vous ne voyez pas le laboratoire, rafraîchissez la page.  
+
+Une fois ouvert, faire
 `Kernel > Change Kernel > glo4030-7030` dans le menu en haut. Vous êtes maintenant prêt à commencer le laboratoire.
 
 > **Attention**
