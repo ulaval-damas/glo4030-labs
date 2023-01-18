@@ -4,7 +4,7 @@ Laboratoires du cours GLO-4030/GLO-7030
 
 ## Instructions
 
-### Exécution sur Hélios avec JupyterHub
+### Exécution sur la grappe de calculs de Calcul Québec avec JupyterHub
 
 La manière la plus simple de travailler sur les laboratoires est de passer par
 le JupyterHub de Calcul Québec. Par contre, il faut comprendre que pour avoir
@@ -12,16 +12,18 @@ accès à une machine avec GPU, il faut se mettre en file d'attente dans le *bat
 system* pour se faire allouer des ressources. Cela devrait prendre moins d'une
 minute la plupart du temps. Voici les étapes à suivre:
 
-1. Vous rendre au https://jupyter.calculquebec.ca/hub/login
-2. Vous connecter avec votre compte Calcul Canada
+1. Vous rendre au https://jupyter.glo4030.calculquebec.cloud/
+2. Vous connecter avec votre compte Calcul Québec
 3. Remplir le formulaire avec les informations suivantes:
+    - Account: def-sponsor00
+    - Time (hours): 2.5
     - Number of cores: entre 1 et 4
     - Memory: au moins 8192
-    - GPU configuration: 1 x K80 **Important! Les cartes K20 ne fonctionnent plus 
-      avec les versions récentes de PyTorch**
+    - GPU configuration: 1 x GPU
     - Reservation: GLO7030 sur les heures réservées, sinon None
+    - User interface: JupyterLab
     - Garder les choix par défaut pour le reste des options
-4. Appuyer sur le bouton *Spawn*
+4. Appuyer sur le bouton *Start*
 
 
 Une fois connecté, vous devriez avoir accès au système de fichier. Le répertoire
@@ -37,28 +39,25 @@ données, les laboratoires et l'environnement virtuel python.
 
 Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 
-1. Ouvrir un terminal en cliquant sur New > Terminal
-2. `source /project/glo4030/venv/bin/activate`
+1. Ouvrir un terminal en cliquant sur `File > New > Terminal`
+2. `source /project/def-sponsor00/glo4030/venv/bin/activate`
 3. Créer un kernel Jupyer de l'environnement (cela permet de lancer des
    notebooks dans l'environnement virtuel): `python -m ipykernel install
    --user --name glo4030-7030`
 4. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
-   avec `ln -s /project/glo4030/ ~/GLO-4030`. Le répertoire du cours est
+   avec `ln -s /project/def-sponsor00/glo4030/ ~/GLO-4030`. Le répertoire du cours est
    maintenant en raccourci dans votre $HOME.
 5. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/glo4030-labs/Laboratoire\ 1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
    qu'en lecture seule aux fichiers du répertoire du cours. Vous aurez à répéter cette opération
    lors de chaque laboratoire.
-6. Quitter la console avec CTRL-D puis fermez la fenêtre.
+6. Quitter la console avec CTRL-D.
 
+Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Une fois ouvert, faire
+`Kernel > Change Kernel > glo4030-7030` dans le menu en haut. Vous êtes maintenant prêt à commencer le laboratoire.
 
-À cette étape, vous devriez avoir un kernel Jupyter fonctionnel. Dans la liste
-des kernels dans *New*, il devrait y avoir *glo4030-7030*. S'il n'apparaît pas,
-rafraîchir la page.
-
-Pour démarrer un laboratoire, double-cliquer sur le laboratoire. Une fois ouvert, faire
-Kernel > Change Kernel > glo4030-7030. Vous êtes maintenant prêt à commencer le laboratoire.
-
+> **Attention**
+> L'exécution de la première cellule peut prendre un certain temps, Matplotlib doit construire sa cache de polices de caractères.
 
 ### Exécution sur Google Colab
 
