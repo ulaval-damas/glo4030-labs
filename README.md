@@ -83,3 +83,7 @@ une machine avec GPU. Les dépendances sont les suivantes:
 
 - pytorch: Voir le site web (http://pytorch.org/) pour plus détails concernant l'installation)
 - les dépendances du fichier `requirements.txt` (avec `pip install -r requirements.txt`)
+
+## Lancer des `jobs` sur la grappe de calculs
+
+Voir [ce guide décrivant les étapes à suivre pour exécuter des jobs](https://github.com/ulaval-damas/glo4030-labs/blob/master/docs/jobs.md).
