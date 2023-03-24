@@ -3,6 +3,7 @@
 
 # Checkpoints
 /logs/
+/Solutionnaires/logs/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
