@@ -22,6 +22,8 @@ echo "Exiting"
 Créer un script qui va lancer plusieurs jobs, `allocate_all_gpu.sh`
 
 ```shell
+#!/bin/bash
+
 for i in $(seq 1 30);
 do
     sbatch allocate_gpu.sh
@@ -31,6 +33,8 @@ done
 Pour annuler toutes les jobs, `cancel_all.sh`:
 
 ```shell
+#!/bin/bash
+
 squeue | awk 'NR>1 {print $1}' | xargs scancel
 rm *.out
 ```
