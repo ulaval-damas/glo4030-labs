@@ -27,7 +27,7 @@ minute la plupart du temps. Voici les étapes à suivre:
 
 
 Une fois connecté, vous devriez avoir accès au système de fichier. Le répertoire
-du cours se situe au `/project/glo4030/`. Il contient les jeux de
+du cours se situe au `/project/def-sponsor00/glo4030`. Il contient les jeux de
 données, les laboratoires et l'environnement virtuel python.
 
 
