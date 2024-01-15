@@ -41,22 +41,19 @@ données, les laboratoires et l'environnement virtuel python.
 Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 
 1. Ouvrir un terminal en cliquant sur `File > New > Terminal`
-2. `source /project/def-sponsor00/glo4030/venv/bin/activate`
+2. Copiez la commande suivante dans le terminal et appuyer sur la touche enter: `source /project/def-sponsor00/glo4030/venv/bin/activate`
 3. Créer un kernel Jupyer de l'environnement (cela permet de lancer des
-   notebooks dans l'environnement virtuel): `python -m ipykernel install
-   --user --name glo4030-7030`
+   notebooks dans l'environnement virtuel): `python -m ipykernel install --user --name glo4030-7030`
 4. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
    avec `ln -s /project/def-sponsor00/glo4030/ ~/GLO-4030`. Le répertoire du cours est
-   maintenant en raccourci dans votre $HOME.
-5. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/glo4030-labs/Laboratoire\ 1.ipynb ~/`. Cela
+   maintenant en raccourci dans votre dossier personnel.
+5. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/Laboratoire\ 1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
-   qu'en lecture seule aux fichiers du répertoire du cours. Vous aurez à répéter cette opération
-   lors de chaque laboratoire.
+   qu'en lecture seule aux fichiers du répertoire du cours. **Vous aurez à répéter cette opération
+   lors de chaque début de laboratoire.**
 6. Quitter la console avec CTRL-D.
-
-Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Si vous ne voyez pas le laboratoire, rafraîchissez la page.  
-
-Une fois ouvert, faire
+7. Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Si vous ne voyez pas le laboratoire, rafraîchissez la page.  
+8. Une fois ouvert, faire
 `Kernel > Change Kernel > glo4030-7030` dans le menu en haut. Vous êtes maintenant prêt à commencer le laboratoire.
 
 > **Attention**
