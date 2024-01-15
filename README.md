@@ -24,6 +24,7 @@ minute la plupart du temps. Voici les étapes à suivre:
     - User interface: JupyterLab
     - Garder les choix par défaut pour le reste des options
 4. Appuyer sur le bouton *Start*
+5. La mise en place n'est pas encore terminée! Continuer à lire ce document!
 
 
 Une fois connecté, vous devriez avoir accès au système de fichier. Le répertoire
