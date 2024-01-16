@@ -1,6 +1,6 @@
 # Warm-up des GPUs sur Calcul Québec
 
-Cette section est réservée n'est pertinente que pour les auxiliaires d'enseignement.
+Cette section est réservée que pour les auxiliaires d'enseignement.
 
 Environ 30 minutes avant le début des laboratoires, il est nécessaire de lancer des jobs pour préparer la grappe de calculs.
 
@@ -37,4 +37,12 @@ Pour annuler toutes les jobs, `cancel_all.sh`:
 
 squeue | awk 'NR>1 {print $1}' | xargs scancel
 rm *.out
+```
+
+Pour voir l'état des jobs, `watch.sh`:
+
+```shell
+#!/bin/bash
+
+watch -n 1 squeue
 ```
