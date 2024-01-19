@@ -1,0 +1,19 @@
+version: '2.23'
+services:
+  service_container_lab:
+    build:
+      context: ../
+      dockerfile: ./Dockerfile
+    container_name: laboratoires_container
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    volumes:
+      - ../:/workspace:cached
+
+  

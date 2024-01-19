@@ -1,0 +1,23 @@
+{
+    "name": "deep-learning-class-dev",
+    "dockerComposeFile": [
+        "compose.yaml" // the docker compose file that we want to run
+    ],
+    "workspaceFolder": "/workspace/",
+	// "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/project,type=bind",
+    "service": "service_container_lab", // The service in docker-compose.yml that we want vs code to use as a dev containers 
+    "shutdownAction": "stopCompose",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-toolsai.jupyter",
+                "ms-toolsai.vscode-jupyter-cell-tags",
+                "ms-toolsai.jupyter-renderers",
+                "ms-toolsai.vscode-jupyter-slideshow",
+                "ms-python.vscode-pylance",
+                "ms-python.python",
+                "ms-toolsai.jupyter-keymap"
+            ]
+        }
+    }
+}
