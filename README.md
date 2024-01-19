@@ -86,3 +86,15 @@ une machine avec GPU. Les dépendances sont les suivantes:
 ## Lancer des `jobs` sur la grappe de calculs
 
 Voir [ce guide décrivant les étapes à suivre pour exécuter des jobs](https://github.com/ulaval-damas/glo4030-labs/blob/master/docs/jobs.md).
+
+## Utilisation de devcontainer pour `vscode`
+
+Nous fournissons un fichier `.devcontainer/devcontainer.json` afin de permettre le développement dans Visual Studio Code à l'intérieur d'un conteneur Docker.
+Pour plus de détails sur le développement dans un container, vous référer à [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers).
+
+> **IMPORTANT**
+> Vous devrez peut-être modifier les versions de drivers utilisés dans `Dockerfile`.
+> 
+> Line 1: `nvidia/cuda:11.4.3-base-ubuntu20.04`
+> Line 26: `RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118`
+> 
