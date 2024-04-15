@@ -140,7 +140,9 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
     history_callback = HistoryCallback()
     callbacks = [history_callback] if callbacks is None else [history_callback] + callbacks
 
-    dataset.transform = ToTensor()
+    if dataset.transform is None:
+        dataset.transform = ToTensor()
+
     train_loader, valid_loader = train_valid_loaders(dataset, batch_size=batch_size)
 
     model = get_model(network, optimizer, criterion, use_gpu=use_gpu, acc=acc)
