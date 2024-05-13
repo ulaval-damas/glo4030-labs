@@ -82,6 +82,7 @@ une machine avec GPU. Les dépendances sont les suivantes:
 
 - pytorch: Voir le site web (http://pytorch.org/) pour plus détails concernant l'installation)
 - les dépendances du fichier `requirements.txt` (avec `pip install -r requirements.txt`)
+- `sudo apt install -y graphviz`
 - intaller JupyterLab `pip install jupyter`
 - lancer JupyterLab `jupyter lab`
 
