@@ -12,3 +12,4 @@ scipy
 Pillow
 poutyne
 einops
+transformers[torch]

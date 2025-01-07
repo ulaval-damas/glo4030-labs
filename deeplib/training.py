@@ -1,14 +1,14 @@
 import warnings
+
 import numpy as np
+import poutyne as pt
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor
 
-import poutyne as pt
-
-from deeplib.history import History
 from deeplib.datasets import train_valid_loaders
+from deeplib.history import History
 
 
 def get_model(network, optimizer=None, criterion=None, use_gpu=True, acc=True):
@@ -140,7 +140,7 @@ def train(network, optimizer, dataset, n_epoch, batch_size, *, use_gpu=True, cri
     history_callback = HistoryCallback()
     callbacks = [history_callback] if callbacks is None else [history_callback] + callbacks
 
-    if dataset.transform is None:
+    if not hasattr(dataset, 'transform') or dataset.transform is None:
         dataset.transform = ToTensor()
 
     train_loader, valid_loader = train_valid_loaders(dataset, batch_size=batch_size)

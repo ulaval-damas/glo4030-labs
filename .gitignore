@@ -1,6 +1,9 @@
 # IDE
 .idea/
 
+# Data
+/data/
+
 # Checkpoints
 /logs/
 /Solutionnaires/logs/
