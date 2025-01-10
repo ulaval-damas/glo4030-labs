@@ -16,15 +16,15 @@ minute la plupart du temps. Voici les étapes à suivre:
 2. Vous connecter avec votre compte Calcul Québec
 3. Remplir le formulaire avec les informations suivantes:
     - Account: def-sponsor00
-    - Time (hours): 2.5
+    - Time (hours): 3.5
     - Number of cores: entre 1 et 4
     - Memory: au moins 8192
-    - GPU configuration: 1 x GPU
+    - GPU configuration: 1 x 1G.5GB
     - Reservation: GLO7030 sur les heures réservées, sinon None
     - User interface: JupyterLab
     - Garder les choix par défaut pour le reste des options
 4. Appuyer sur le bouton *Start*
-5. La mise en place n'est pas encore terminée! Continuer à lire ce document!
+5. **La mise en place n'est pas encore terminée! Continuez à lire ce document!**
 
 
 Une fois connecté, vous devriez avoir accès au système de fichier. Le répertoire
@@ -42,19 +42,16 @@ Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 
 1. Ouvrir un terminal en cliquant sur `File > New > Terminal`
 2. Copiez la commande suivante dans le terminal et appuyer sur la touche enter: `source /project/def-sponsor00/glo4030/venv/bin/activate`
-3. Créer un kernel Jupyer de l'environnement (cela permet de lancer des
-   notebooks dans l'environnement virtuel): `python -m ipykernel install --user --name glo4030-7030`
-4. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
-   avec `ln -s /project/def-sponsor00/glo4030/ ~/GLO-4030`. Le répertoire du cours est
+3. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
+   avec `ln -s /project/def-sponsor00/glo4030/glo4030-labs ~/GLO-4030`. Le répertoire du cours est
    maintenant en raccourci dans votre dossier personnel.
+4. Copier `deeplib`, une bibliothèque de fonctions utilitaires conçue pour le cours avec `cp -r ~/GLO-4030/deeplib ~/`
 5. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/Laboratoire\ 1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
    qu'en lecture seule aux fichiers du répertoire du cours. **Vous aurez à répéter cette opération
    lors de chaque début de laboratoire.**
-6. Quitter la console avec CTRL-D.
-7. Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Si vous ne voyez pas le laboratoire, rafraîchissez la page.  
-8. Une fois ouvert, faire
-`Kernel > Change Kernel > glo4030-7030` dans le menu en haut. Vous êtes maintenant prêt à commencer le laboratoire.
+6. Quitter la console avec la commande `exit`.
+7. Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Si vous ne voyez pas le laboratoire, rafraîchissez la page.
 
 > **Attention**
 > L'exécution de la première cellule peut prendre un certain temps, Matplotlib doit construire sa cache de polices de caractères.
