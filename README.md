@@ -12,7 +12,7 @@ accès à une machine avec GPU, il faut se mettre en file d'attente dans le *bat
 system* pour se faire allouer des ressources. Cela devrait prendre moins d'une
 minute la plupart du temps. Voici les étapes à suivre:
 
-1. Vous rendre au https://jupyter.glo4030.calculquebec.cloud/
+1. Vous rendre au [https://jupyter.glo4030.calculquebec.cloud/](https://glo7030.calculquebec.cloud)
 2. Vous connecter avec votre compte Calcul Québec
 3. Remplir le formulaire avec les informations suivantes:
     - Account: def-sponsor00
