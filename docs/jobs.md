@@ -1,10 +1,10 @@
 # Exécution de `jobs` sur la grappe de Calcul Québec
 
-1. Connexion par SSH à l'URL suivante: `glo4030.calculquebec.cloud`.
+1. Connexion par SSH à l'URL suivante: `glo7030.calculquebec.cloud`.
 
 ```bash
 # remplacez <username> par votre notre d'utilisateur
-ssh <username>@glo4030.calculquebec.cloud
+ssh <username>@glo7030.calculquebec.cloud
 ```
 
 2. Déposer votre code sur le serveur avec `git clone`
