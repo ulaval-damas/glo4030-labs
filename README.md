@@ -20,7 +20,7 @@ minute la plupart du temps. Voici les étapes à suivre:
     - Number of cores: entre 1 et 4
     - Memory: au moins 8192
     - GPU configuration: 1 x 1G.5GB
-    - Reservation: GLO7030 sur les heures réservées, sinon None
+    - Reservation: None
     - User interface: JupyterLab
     - Garder les choix par défaut pour le reste des options
 4. Appuyer sur le bouton *Start*
