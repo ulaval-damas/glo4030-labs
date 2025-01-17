@@ -41,16 +41,17 @@ données, les laboratoires et l'environnement virtuel python.
 Les prochaines étapes se font en ligne de commande directement dans Jupyter:
 
 1. Ouvrir un terminal en cliquant sur `File > New > Terminal`
-2. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
+2. `cd`
+3. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
    avec `ln -s /project/def-sponsor00/glo4030/glo4030-labs ~/GLO-4030`. Le répertoire du cours est
    maintenant en raccourci dans votre dossier personnel.
-3. Copier `deeplib`, une bibliothèque de fonctions utilitaires conçue pour le cours avec `cp -r ~/GLO-4030/deeplib ~/`
-4. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/Laboratoire\ 1.ipynb ~/`. Cela
+4. Copier `deeplib`, une bibliothèque de fonctions utilitaires conçue pour le cours avec `cp -r ~/GLO-4030/deeplib ~/`
+5. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/Laboratoire\ 1.ipynb ~/`. Cela
    vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
    qu'en lecture seule aux fichiers du répertoire du cours. **Vous aurez à répéter cette opération
    lors de chaque début de laboratoire.**
-5. Quitter la console avec la commande `exit`.
-6. Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Si vous ne voyez pas le laboratoire, rafraîchissez la page.
+6. Quitter la console avec la commande `exit`.
+7. Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Si vous ne voyez pas le laboratoire, rafraîchissez la page.
 
 > **Attention**
 > L'exécution de la première cellule peut prendre un certain temps, Matplotlib doit construire sa cache de polices de caractères.
