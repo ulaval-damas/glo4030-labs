@@ -2,63 +2,51 @@
 
 Laboratoires du cours GLO-4030/GLO-7030
 
-## Instructions
+## Usage de l'Infrastructure de calcul pour l'enseignement (ICE)
 
-### Exécution sur la grappe de calculs de Calcul Québec avec JupyterHub
+La manière recommandée de travailler sur les laboratoires est de passer par ICE. Cette plateforme sera également disponible pour les travaux pratiques et le projet de session.
+Vous pouvez trouver la documentation de la plateforme [sur cette page](https://ul-ice-docs.s3.valeria.science/index.html).
 
-La manière la plus simple de travailler sur les laboratoires est de passer par
-le JupyterHub de Calcul Québec. Par contre, il faut comprendre que pour avoir
-accès à une machine avec GPU, il faut se mettre en file d'attente dans le *batch
-system* pour se faire allouer des ressources. Cela devrait prendre moins d'une
-minute la plupart du temps. Voici les étapes à suivre:
+### Exécution sur JupyterHub
 
-1. Vous rendre au https://glo7030.calculquebec.cloud
-2. Vous connecter avec votre compte Calcul Québec
-3. Remplir le formulaire avec les informations suivantes:
-    - Account: def-sponsor00
-    - Time (hours): 3.5
-    - Number of cores: entre 1 et 4
-    - Memory: au moins 8192
-    - GPU configuration: 1 x 1G.5GB
-    - Reservation: None
-    - User interface: JupyterLab
-    - Garder les choix par défaut pour le reste des options
-4. Appuyer sur le bouton *Start*
-5. **La mise en place n'est pas encore terminée! Continuez à lire ce document!**
-
+Voici les étapes initiales à suivre:
+1. Si ce n'est pas déjà fait, vous connecter au réseau ou au VPN de l'Université Laval
+2. Vous rendre sur https://jupyter.ice.ulaval.ca/hub/home
+3. Vous connecter avec votre compte ULaval
+4. Sélectionner *Démarrer mon serveur*
+5. Voir [cette section](https://ul-ice-docs.s3.valeria.science/index.html#4-utilisation-du-calcul-gpu-avec-jupyter) de la documentation pour les paramètres à choisir
+6. Appuyer sur le bouton *Démarrer*
+7. **La mise en place n'est pas encore terminée! Continuez à lire ce document!**
 
 Une fois connecté, vous devriez avoir accès au système de fichier. Le répertoire
-du cours se situe au `/project/def-sponsor00/glo4030`. Il contient les jeux de
+du cours se situe au `/public/enseignement/GLO-4030`. Il contient les jeux de
 données, les laboratoires et l'environnement virtuel python.
 
-
 > **IMPORTANT**
-> Vous n'avez accès qu'en lecture au notebook des laboratoires dans le répertoire
-> du cours. Avant de travailler sur un laboratoire, veillez le copier dans votre
-> propre répertoire.
-
-
-Les prochaines étapes se font en ligne de commande directement dans Jupyter:
+> Vous n'avez accès qu'en lecture au répertoire. Avant de travailler sur un laboratoire, suivez les prochaines étapes.
 
 1. Ouvrir un terminal en cliquant sur `File > New > Terminal`
-2. `cd`
-3. Faire un lien symbolique pour plus rapidement accéder aux fichiers du cours
-   avec `ln -s /project/def-sponsor00/glo4030/glo4030-labs ~/GLO-4030`. Le répertoire du cours est
-   maintenant en raccourci dans votre dossier personnel.
-4. Copier `deeplib`, une bibliothèque de fonctions utilitaires conçue pour le cours avec `cp -r ~/GLO-4030/deeplib ~/`
-5. Copier le labo 1 dans votre $HOME `cp ~/GLO-4030/Laboratoire\ 1.ipynb ~/`. Cela
-   vous permet de sauvegarder vos résultats et modifications. Vous n'avez accès
-   qu'en lecture seule aux fichiers du répertoire du cours. **Vous aurez à répéter cette opération
-   lors de chaque début de laboratoire.**
-6. Quitter la console avec la commande `exit`.
-7. Pour démarrer un laboratoire, double-cliquer sur le laboratoire dans l'arborescence de fichier à gauche. Si vous ne voyez pas le laboratoire, rafraîchissez la page.
+2. Faire un lien symbolique vers les fichiers du cours avec `ln -s /public/enseignement/GLO-4030 ~/GLO-4030`.
+3. Faire un lien symbolique vers deeplib avec `ln -s ~/GLO-4030/code/glo4030-labs/deeplib ~/deeplib`
 
-> **Attention**
-> L'exécution de la première cellule peut prendre un certain temps, Matplotlib doit construire sa cache de polices de caractères.
+Le répertoire du cours est maintenant en raccourci dans votre dossier personnel, mais il est encore en lecture seule. Au début de chaque laboratoire, vous devrez:
 
-### Exécution sur Google Colab
+1. Charger le module du cours en suivant [cette section](https://ul-ice-docs.s3.valeria.science/index.html#etape-3-chargement-du-module-personnalise-pour-le-cours) de la documentation.
+   Cette étape est cruciale pour accéder à l'environnement virtuel des laboratoires.
+2. Copier le notebook du laboratoire du jour dans votre $HOME, e.g. `cp ~/GLO-4030/code/glo4030-labs/Laboratoire\ 1.ipynb ~/`.
+   Cela vous permet de sauvegarder vos résultats et modifications.
+3. Pour démarrer le laboratoire, double-cliquer sur le notebook dans l'arborescence de fichier à gauche. Si vous ne voyez pas le fichier, rafraîchissez la page.
 
-Il est possible d'utiliser Google Colab pour les laboratoires suivants:
+### Lancer des `jobs` sur l'Infrastructure de calcul pour l'enseignement (ICE) avec Slurm
+
+Cette approche sera plutôt pertinente pour les travaux pratiques et le projet de session.
+Voir [cette section](https://ul-ice-docs.s3.valeria.science/index.html#5-utilisation-du-calcul-gpu-avec-slurm-mode-batch) de la documentation.
+
+## Exécution sur Google Colab
+
+Il est possible d'utiliser Google Colab pour les laboratoires. Le seul prérequis est d'avoir un compte Google.
+Nous recommandons toutefois d'utiliser la plateforme ICE, qui donne accès à de meilleures ressources computationnelles.
+Vous pouvez accéder aux laboratoires avec Google Colab à partir des liens suivants:
 
 - [Laboratoire 1](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Laboratoire%201.ipynb)
 - [Laboratoire 2](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Laboratoire%202.ipynb)
@@ -69,12 +57,9 @@ Il est possible d'utiliser Google Colab pour les laboratoires suivants:
 - [Laboratoire 7](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Laboratoire%207.ipynb)
 - [Laboratoire 8](https://colab.research.google.com/github/ulaval-damas/glo4030-labs/blob/master/Laboratoire%208.ipynb)
 
-Le seul prérequis est d'avoir un compte Google.
+## Installation locale
 
-
-### Installation locale
-
-Il est possible d'installer en local les laboratoires. Il vous faudra idéalement
+Il est possible d'exécuter les laboratoires à partir d'une installation locale. Il vous faudra idéalement
 une machine avec GPU. Les dépendances sont les suivantes:
 
 - pytorch: Voir le site web (http://pytorch.org/) pour plus détails concernant l'installation)
@@ -82,10 +67,6 @@ une machine avec GPU. Les dépendances sont les suivantes:
 - `sudo apt install -y graphviz`
 - intaller JupyterLab `pip install jupyter`
 - lancer JupyterLab `jupyter lab`
-
-## Lancer des `jobs` sur la grappe de calculs
-
-Voir [ce guide décrivant les étapes à suivre pour exécuter des jobs](https://github.com/ulaval-damas/glo4030-labs/blob/master/docs/jobs.md).
 
 ## Utilisation de devcontainer pour `vscode`
 
